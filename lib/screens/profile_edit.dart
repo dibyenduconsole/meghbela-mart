@@ -415,7 +415,7 @@ backgroundColor: Colors.white,
                 ),
               ),
             ),*/
-            Row(
+            /*Row(
               children: [
                 Spacer(),
                 Padding(
@@ -449,7 +449,7 @@ backgroundColor: Colors.white,
                   ),
                 ),
               ],
-            ),
+            ),*/
           ],
         ),
       ),

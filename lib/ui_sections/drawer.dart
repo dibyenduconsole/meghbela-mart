@@ -212,7 +212,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                   return MessengerList();
                                 }));
                               }),*/
-                          ListTile(
+                          /*ListTile(
                               visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
                               leading: Icon(Icons.compare),
@@ -225,7 +225,7 @@ class _MainDrawerState extends State<MainDrawer> {
                               onTap: () {
 
 
-                              }),
+                              }),*/
                           ListTile(
                               visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
