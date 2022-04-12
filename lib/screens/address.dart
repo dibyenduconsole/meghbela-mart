@@ -243,7 +243,7 @@ class _AddressState extends State<Address> {
   onAddressAdd(context) async {
     var address = _addressController.text.toString();
     var postal_code = _postalCodeController.text.toString();
-    var phone = _phoneController.text.toString();
+    var phone = user_phone.$;//_phoneController.text.toString();
 
     if (address == "") {
       ToastComponent.showDialog(
@@ -297,7 +297,7 @@ class _AddressState extends State<Address> {
   onAddressUpdate(context, index, id) async {
     var address = _addressControllerListForUpdate[index].text.toString();
     var postal_code = _postalCodeControllerListForUpdate[index].text.toString();
-    var phone = _phoneControllerListForUpdate[index].text.toString();
+    var phone = user_phone.$;//_phoneControllerListForUpdate[index].text.toString();
 
     if (address == "") {
       ToastComponent.showDialog(
@@ -887,7 +887,7 @@ class _AddressState extends State<Address> {
                           ),
                         ),
                       ),
-                      Padding(
+                     /* Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
                             AppLocalizations.of(context).address_screen_phone,
@@ -927,7 +927,7 @@ class _AddressState extends State<Address> {
                                     EdgeInsets.symmetric(horizontal: 8.0)),
                           ),
                         ),
-                      )
+                      )*/
                     ],
                   ),
                 ),
@@ -1377,7 +1377,7 @@ class _AddressState extends State<Address> {
                           ),
                         ),
                       ),
-                      Padding(
+                      /*Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: Text(
                             AppLocalizations.of(context).address_screen_phone,
@@ -1417,7 +1417,7 @@ class _AddressState extends State<Address> {
                                     EdgeInsets.symmetric(horizontal: 8.0)),
                           ),
                         ),
-                      )
+                      )*/
                     ],
                   ),
                 ),

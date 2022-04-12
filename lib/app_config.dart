@@ -37,4 +37,7 @@ class AppConfig {
   //otherwise do not change anythink
   static const String BASE_PATH = "${RAW_BASE_URL}/${PUBLIC_FOLDER}/";
   //static const String BASE_PATH = "https://tosoviti.s3.ap-southeast-2.amazonaws.com/";
+  static const String BASE_terms = "https://www.meghbelamart.com/terms";
+  static const String BASE_privacy_policy = "https://www.meghbelamart.com/privacy-policy";
+  static const String BASE_refund_policy = "https://www.meghbelamart.com/refund-policy";
 }

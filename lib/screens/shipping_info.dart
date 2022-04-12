@@ -196,7 +196,10 @@ class _ShippingInfoState extends State<ShippingInfo> {
         .updateEmailVerify(_phone, _email)
         .then((value) {
       if (jsonDecode(value.toString())["result"] == true) {
-        onPressProceed(context);
+        //onPressProceed(context);
+        ToastComponent.showDialog(
+            jsonDecode(value.toString())["message"], context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       } else {
         ToastComponent.showDialog(
             jsonDecode(value.toString())["message"], context,

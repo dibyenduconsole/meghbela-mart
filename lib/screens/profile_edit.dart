@@ -22,8 +22,12 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   TextEditingController _nameController =
       TextEditingController(text: "${user_name.$}");
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _passwordConfirmController = TextEditingController();
+  TextEditingController _emailController =
+  TextEditingController(text: "${user_email.$}");
+  TextEditingController _phoneController =
+  TextEditingController(text: "${user_phone.$}");
+  /*TextEditingController _passwordController = TextEditingController();
+  TextEditingController _passwordConfirmController = TextEditingController();*/
 
   //for image uploading
   final ImagePicker _picker = ImagePicker();
@@ -95,7 +99,7 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   onPressUpdate() async {
     var name = _nameController.text.toString();
-    var password = _passwordController.text.toString();
+    /*var password = _passwordController.text.toString();
     var password_confirm = _passwordConfirmController.text.toString();
 
     var change_password = password != "" ||
@@ -127,12 +131,12 @@ class _ProfileEditState extends State<ProfileEdit> {
       ToastComponent.showDialog(AppLocalizations.of(context).profile_edit_screen_password_match_warning, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       return;
-    }
+    }*/
 
     var profileUpdateResponse =
         await ProfileRepository().getProfileUpdateResponse(
       name,
-      change_password ? password : "",
+      "",
     );
 
     if (profileUpdateResponse.result == false) {
@@ -313,6 +317,50 @@ backgroundColor: Colors.white,
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(
+                "Phone",
+                style: TextStyle(
+                    color: MyTheme.accent_color, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 36,
+                child: TextField(
+                  controller: _phoneController,
+                  enabled: false,
+                  autofocus: false,
+                  decoration: InputDecorations.buildInputDecoration_1(
+                      hint_text: "John Doe"),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Text(
+                "Email address",
+                style: TextStyle(
+                    color: MyTheme.accent_color, fontWeight: FontWeight.w600),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                height: 36,
+                child: TextField(
+                  controller: _emailController,
+                  autofocus: false,
+                  decoration: InputDecorations.buildInputDecoration_1(
+                      hint_text: "John Doe"),
+                ),
+              ),
+            ),
+
+
+            /*Padding(
+              padding: const EdgeInsets.only(bottom: 4.0),
+              child: Text(
                 AppLocalizations.of(context).profile_edit_screen_password,
                 style: TextStyle(
                     color: MyTheme.accent_color, fontWeight: FontWeight.w600),
@@ -366,7 +414,7 @@ backgroundColor: Colors.white,
                       hint_text: "• • • • • • • •"),
                 ),
               ),
-            ),
+            ),*/
             Row(
               children: [
                 Spacer(),

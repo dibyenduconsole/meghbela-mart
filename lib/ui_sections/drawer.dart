@@ -15,6 +15,7 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MainDrawer extends StatefulWidget {
   const MainDrawer({
@@ -43,7 +44,14 @@ class _MainDrawerState extends State<MainDrawer> {
       return Main();
     }), (route) => false);
   }
-
+  _launchURL(String _url) async {
+    String url = _url;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -207,12 +215,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           ListTile(
                               visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
-                              leading: Image.asset(
-                                "assets/chat.png",
-                                height: 16,
-                                color: MyTheme
-                                    .white, //Color.fromRGBO(153, 153, 153, 1)
-                              ),
+                              leading: Icon(Icons.compare),
                               title: Text(
                                   "Compare",
                                   style: TextStyle(
@@ -226,12 +229,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           ListTile(
                               visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
-                              leading: Image.asset(
-                                "assets/chat.png",
-                                height: 16,
-                                color: MyTheme
-                                    .white, //Color.fromRGBO(153, 153, 153, 1)
-                              ),
+                              leading: Icon(Icons.privacy_tip_outlined),
                               title: Text(
                                   "Privacy policy",
                                   style: TextStyle(
@@ -240,17 +238,12 @@ class _MainDrawerState extends State<MainDrawer> {
                                       fontSize: 14)),
                               onTap: () {
 
-
+                                _launchURL(AppConfig.BASE_privacy_policy);
                               }),
                           ListTile(
                               visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
-                              leading: Image.asset(
-                                "assets/chat.png",
-                                height: 16,
-                                color: MyTheme
-                                    .white, //Color.fromRGBO(153, 153, 153, 1)
-                              ),
+                              leading: Icon(Icons.security),
                               title: Text(
                                   "Terms of use",
                                   style: TextStyle(
@@ -258,27 +251,20 @@ class _MainDrawerState extends State<MainDrawer> {
                                           .font_grey, //Color.fromRGBO(153, 153, 153, 1),
                                       fontSize: 14)),
                               onTap: () {
-
-
+                                _launchURL(AppConfig.BASE_terms);
                               }),
                           ListTile(
                               visualDensity:
                               VisualDensity(horizontal: -4, vertical: -4),
-                              leading: Image.asset(
-                                "assets/chat.png",
-                                height: 16,
-                                color: MyTheme
-                                    .white, //Color.fromRGBO(153, 153, 153, 1)
-                              ),
+                              leading: Icon(Icons.policy_outlined),
                               title: Text(
-                                  "Return policy",
+                                  "Refund policy",
                                   style: TextStyle(
                                       color: MyTheme
                                           .font_grey, //Color.fromRGBO(153, 153, 153, 1),
                                       fontSize: 14)),
                               onTap: () {
-
-
+                                _launchURL(AppConfig.BASE_refund_policy);
                               }),
                           wallet_system_status.$
                               ? ListTile(

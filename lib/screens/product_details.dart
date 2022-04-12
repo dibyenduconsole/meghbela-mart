@@ -939,7 +939,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 height: 60.0,
                               )),
                     ),
-                    Divider(
+                    /*Divider(
                       height: 1,
                     ),
                     InkWell(
@@ -1172,7 +1172,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                     Divider(
                       height: 1,
-                    ),
+                    ),*/
                   ]),
                 ),
                 SliverList(
@@ -1285,7 +1285,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         ),
         Spacer(),
-        Container(
+        /*Container(
             child: Row(
           children: [
             InkWell(
@@ -1313,7 +1313,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             ),
             Icon(Icons.message, size: 16, color: Color.fromRGBO(7, 101, 136, 1))
           ],
-        ))
+        ))*/
       ],
     );
   }
@@ -1841,7 +1841,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   buildRatingAndWishButtonRow() {
     return Row(
       children: [
-        RatingBar(
+        /*RatingBar(
           itemSize: 18.0,
           ignoreGestures: true,
           initialRating: double.parse(_productDetails.rating.toString()),
@@ -1866,7 +1866,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             style: TextStyle(
                 color: Color.fromRGBO(152, 152, 153, 1), fontSize: 14),
           ),
-        ),
+        ),*/
         Spacer(),
         _isInWishList
             ? InkWell(

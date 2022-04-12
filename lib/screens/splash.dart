@@ -26,8 +26,13 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+      if(is_logged_in.$) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Main()));
+      }else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Login()));
+      }
     });
 
     //on Splash Screen hide statusbar

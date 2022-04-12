@@ -55,6 +55,11 @@ class _LoginState extends State<Login> {
   void initState() {
     //on Splash Screen hide statusbar
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    /*if(is_logged_in.$) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Main()));
+    }*/
+
     super.initState();
   }
 
