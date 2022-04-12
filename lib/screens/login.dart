@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
   String initialCountry = 'US';
   PhoneNumber phoneCode = PhoneNumber(isoCode: 'US', dialCode: "+1");
   String _phone = "";
-  int userType = 0;
+  int userType = 1;
   String usersTypeStatus = 'Select Users Type';
   List<String> usersTypeList = [
     'Existing Meghbela user',
@@ -409,7 +409,7 @@ class _LoginState extends State<Login> {
                     child:
                         Image.asset('assets/login_registration_form_logo.png'),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     height: 50,
                   ),
                   Container(
@@ -433,7 +433,7 @@ class _LoginState extends State<Login> {
                         statusList: usersTypeList,
                       ),
                     ),
-                  ),
+                  ),*/
                   SizedBox(
                     height: 20,
                   ),
@@ -505,7 +505,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     height: 20,
                   ),
                   Text(
@@ -514,8 +514,8 @@ class _LoginState extends State<Login> {
                         color: MyTheme.white,
                         fontSize: 18,
                         fontWeight: FontWeight.w600),
-                  ),
-                  Padding(
+                  ),*/
+                  /*Padding(
                     padding:
                         const EdgeInsets.only(top: 30.0, left: 100, right: 100),
                     child: Container(
@@ -558,7 +558,7 @@ class _LoginState extends State<Login> {
                         },
                       ),
                     ),
-                  )
+                  )*/
                 ],
               ),
             ),

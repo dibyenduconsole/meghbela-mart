@@ -66,7 +66,7 @@ class _MainDrawerState extends State<MainDrawer> {
                         title: Text("${user_name.$}"),
                         subtitle: Text(
                           //if user email is not available then check user phone if user phone is not available use empty string
-                          "${user_email.$ != "" && user_email.$ != null ? user_email.$ : user_phone.$ != "" && user_phone.$ != null ? user_phone.$ : ''}",
+                          "${user_phone.$ != "" && user_phone.$ != null ? user_phone.$ : ''}",
                         ))
                     : Text(
                         AppLocalizations.of(context).main_drawer_not_logged_in,
@@ -75,7 +75,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                 .font_grey, //Color.fromRGBO(153, 153, 153, 1),
                             fontSize: 14)),
                 Divider(),
-                ListTile(
+                /*ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset(
                       "assets/language.png",
@@ -94,7 +94,7 @@ class _MainDrawerState extends State<MainDrawer> {
                           MaterialPageRoute(builder: (context) {
                         return ChangeLanguage();
                       }));
-                    }),
+                    }),*/
                 ListTile(
                     visualDensity: VisualDensity(horizontal: -4, vertical: -4),
                     leading: Image.asset(
@@ -182,7 +182,7 @@ class _MainDrawerState extends State<MainDrawer> {
                                   return Wishlist();
                                 }));
                               }),
-                          ListTile(
+                          /*ListTile(
                               visualDensity:
                                   VisualDensity(horizontal: -4, vertical: -4),
                               leading: Image.asset(
@@ -203,6 +203,82 @@ class _MainDrawerState extends State<MainDrawer> {
                                     MaterialPageRoute(builder: (context) {
                                   return MessengerList();
                                 }));
+                              }),*/
+                          ListTile(
+                              visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                              leading: Image.asset(
+                                "assets/chat.png",
+                                height: 16,
+                                color: MyTheme
+                                    .white, //Color.fromRGBO(153, 153, 153, 1)
+                              ),
+                              title: Text(
+                                  "Compare",
+                                  style: TextStyle(
+                                      color: MyTheme
+                                          .font_grey, //Color.fromRGBO(153, 153, 153, 1),
+                                      fontSize: 14)),
+                              onTap: () {
+
+
+                              }),
+                          ListTile(
+                              visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                              leading: Image.asset(
+                                "assets/chat.png",
+                                height: 16,
+                                color: MyTheme
+                                    .white, //Color.fromRGBO(153, 153, 153, 1)
+                              ),
+                              title: Text(
+                                  "Privacy policy",
+                                  style: TextStyle(
+                                      color: MyTheme
+                                          .font_grey, //Color.fromRGBO(153, 153, 153, 1),
+                                      fontSize: 14)),
+                              onTap: () {
+
+
+                              }),
+                          ListTile(
+                              visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                              leading: Image.asset(
+                                "assets/chat.png",
+                                height: 16,
+                                color: MyTheme
+                                    .white, //Color.fromRGBO(153, 153, 153, 1)
+                              ),
+                              title: Text(
+                                  "Terms of use",
+                                  style: TextStyle(
+                                      color: MyTheme
+                                          .font_grey, //Color.fromRGBO(153, 153, 153, 1),
+                                      fontSize: 14)),
+                              onTap: () {
+
+
+                              }),
+                          ListTile(
+                              visualDensity:
+                              VisualDensity(horizontal: -4, vertical: -4),
+                              leading: Image.asset(
+                                "assets/chat.png",
+                                height: 16,
+                                color: MyTheme
+                                    .white, //Color.fromRGBO(153, 153, 153, 1)
+                              ),
+                              title: Text(
+                                  "Return policy",
+                                  style: TextStyle(
+                                      color: MyTheme
+                                          .font_grey, //Color.fromRGBO(153, 153, 153, 1),
+                                      fontSize: 14)),
+                              onTap: () {
+
+
                               }),
                           wallet_system_status.$
                               ? ListTile(

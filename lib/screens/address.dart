@@ -1499,10 +1499,10 @@ class _AddressState extends State<Address> {
             AppLocalizations.of(context).address_screen_addresses_of_user,
             style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
           ),
-          Text(
+          /*Text(
             "* ${AppLocalizations.of(context).address_screen_addresses_to_make_default}",
             style: TextStyle(fontSize: 10, color: MyTheme.medium_grey),
-          ),
+          ),*/
         ],
       ),
       elevation: 0.0,
@@ -1814,22 +1814,22 @@ class _AddressState extends State<Address> {
                     top: 80.0,
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(context,
+                        /*Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return MapLocation(
                               address: _shippingAddressList[index]);
                         })).then((value) {
                           onPopped(value);
-                        });
+                        });*/
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 12.0, left: 16.0, right: 16.0, bottom: 16.0),
-                        child: Icon(
+                        /*child: Icon(
                           Icons.location_on,
                           color: MyTheme.dark_grey,
                           size: 16,
-                        ),
+                        ),*/
                       ),
                     ))
                 : Container()
