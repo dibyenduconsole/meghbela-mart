@@ -31,6 +31,7 @@ class _ShippingInfoState extends State<ShippingInfo> {
   ScrollController _mainScrollController = ScrollController();
 
   // integer type variables
+  String _seleted_shipping_address_pincode = "0";
   int _seleted_shipping_address = 0;
   int _seleted_shipping_pickup_point = 0;
 
@@ -122,11 +123,21 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
     }
 
-
+    _seleted_shipping_address_pincode = await getPostCodeFromAddressID(_seleted_shipping_address);
     if ( shippingCostResponse.result == true) {
       _shipping_cost_string = shippingCostResponse.value_string;
       setState(() {});
     }
+  }
+
+  Future<String> getPostCodeFromAddressID(_addressID)async{
+    String postCode = "0";
+    _shippingAddressList.forEach((address) {
+      if (address.id == _addressID) {
+        postCode = address.postal_code;
+      }
+    });
+    return postCode;
   }
 
   reset() {
@@ -182,11 +193,16 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   checkEmailVerify(String _phone) async {
     await AddressRepository()
-        .getEmailVerify(_phone)
+        .getEmailVerify(_phone, _seleted_shipping_address_pincode)
         .then((value) {
       if (jsonDecode(value.toString())["result"] == true) {
         onPressProceed(context);
-      } else {
+      }else if(jsonDecode(value.toString())["message"].toString().contains("postalcode")) {
+        ToastComponent.showDialog(
+            jsonDecode(value.toString())["message"], context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      }
+      else {
         _displayUpdateEmailInputDialog(context);
       }
     });

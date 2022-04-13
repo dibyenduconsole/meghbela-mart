@@ -17,9 +17,10 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
 class AddressRepository {
-  Future<String> getEmailVerify(String phNo) async {
+  Future<String> getEmailVerify(String phNo, String postcode) async {
     var post_body = jsonEncode({
-      "phone": phNo
+      "phone": phNo,
+      "pincode": postcode
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/check-email");
