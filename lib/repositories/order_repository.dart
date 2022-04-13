@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -34,6 +37,28 @@ class OrderRepository {
     print("URL: "+url.toString());
     print("response: "+response.body);
     return orderDetailResponseFromJson(response.body);
+  }
+
+  Future<String> cancelOrderDetails({@required int id = 0}) async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/auth/change-delivery-status");
+
+    var post_body = jsonEncode({
+      "code": id
+    });
+    log("=Request: \n$url\n" + post_body);
+    final response = await http.post(url,
+        headers: {
+          "Accept": "*/*",
+          "Content-Type": "application/json",
+          "App-Language": app_language.$,
+        },
+        body: post_body);
+
+    print("URL: "+url.toString());
+    print("Request: "+post_body);
+    print("response: "+response.body);
+    return response.body;
   }
 
   Future<OrderItemResponse> getOrderItems({@required int id = 0}) async {

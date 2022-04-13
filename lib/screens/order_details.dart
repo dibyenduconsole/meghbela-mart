@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -74,6 +76,31 @@ class _OrderDetailsState extends State<OrderDetails> {
       setStepIndex(_orderDetails.delivery_status);
     }
 
+    setState(() {});
+  }
+
+  cancelOrderDetails() async {/*
+    var orderDetailsResponse =
+    await OrderRepository().getOrderDetails(id: widget.id);
+
+    if (orderDetailsResponse.detailed_orders.length > 0) {
+      _orderDetails = orderDetailsResponse.detailed_orders[0];
+      setStepIndex(_orderDetails.delivery_status);
+    }*/
+    await OrderRepository()
+        .cancelOrderDetails(id: widget.id)
+        .then((value) {
+      if (jsonDecode(value.toString())["result"] == true) {
+        ToastComponent.showDialog(
+            jsonDecode(value.toString())["message"], context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        fetchOrderDetails();
+      } else {
+        ToastComponent.showDialog(
+            jsonDecode(value.toString())["message"], context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      }
+    });
     setState(() {});
   }
 
@@ -1019,7 +1046,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             Row(
               children: [
                 Text(
-                  "Delivery Date",
+                  "Delivery expected by",
                   style: TextStyle(
                       color: MyTheme.font_grey,
                       fontSize: 13,
@@ -1446,7 +1473,8 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   buildDownloadInvoiceButton(){
     return
-      Padding(
+      /*_orderDetails.delivery_status == "delivered"?Container()
+      :*/Padding(
         padding:
         const EdgeInsets.only(top: 30.0, left: 100, right: 100),
         child: Container(
@@ -1464,14 +1492,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                 borderRadius:
                 const BorderRadius.all(Radius.circular(40.0))),
             child: Text(
-              "Download invoice",
+              "Cancel order",
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w600),
             ),
             onPressed: () {
-
+              cancelOrderDetails();
             },
           ),
         ),
