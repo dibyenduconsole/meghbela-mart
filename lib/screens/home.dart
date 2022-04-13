@@ -53,6 +53,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _current_slider = 0;
   ScrollController _featuredProductScrollController;
+  ScrollController _bestSellingProductScrollController;
+  ScrollController _todaysDealProductScrollController;
+  ScrollController _newProductScrollController;
   ScrollController _mainScrollController = ScrollController();
 
   AnimationController pirated_logo_controller;
@@ -61,6 +64,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   var _carouselImageList = [];
   var _featuredCategoryList = [];
   var _featuredProductList = [];
+  var _bestSellingProductList = [];
+  var _todaysDealProductList = [];
+  var _newProductList = [];
   bool _isProductInitial = true;
   bool _isCategoryInitial = true;
   bool _isCarouselInitial = true;
@@ -102,6 +108,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     fetchCarouselImages();
     fetchFeaturedCategories();
     fetchFeaturedProducts();
+    fetchBestSellingProducts();
+    fetchTodaysDealProducts();
+    fetchNewProducts();
     // AddonsHelper().setAddonsData();
     // BusinessSettingHelper().setBusinessSettingData();
   }
@@ -134,9 +143,45 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     setState(() {});
   }
 
+  fetchBestSellingProducts() async {
+    var productResponse = await ProductRepository().getBestSellingProducts();
+
+    _bestSellingProductList.addAll(productResponse.products);
+    _isProductInitial = false;
+    _totalProductData = productResponse.meta.total;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
+  fetchTodaysDealProducts() async {
+    var productResponse = await ProductRepository().getTodaysDealProducts();
+
+    _todaysDealProductList.addAll(productResponse.products);
+    _isProductInitial = false;
+    _totalProductData = productResponse.meta.total;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
+  fetchNewProducts() async {
+    var productResponse = await ProductRepository().getFeaturedProducts(
+      page: _productPage,
+    );
+
+    _newProductList.addAll(productResponse.products);
+    _isProductInitial = false;
+    _totalProductData = productResponse.meta.total;
+    _showProductLoadingContainer = false;
+    setState(() {});
+  }
+
   reset() {
     _carouselImageList.clear();
     _featuredCategoryList.clear();
+    _featuredProductList.clear();
+    _bestSellingProductList.clear();
+    _todaysDealProductList.clear();
+    _newProductList.clear();
     _isCarouselInitial = true;
     _isCategoryInitial = true;
 
@@ -152,6 +197,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
 
   resetProductList() {
     _featuredProductList.clear();
+    _bestSellingProductList.clear();
+    _todaysDealProductList.clear();
+    _newProductList.clear();
     _isProductInitial = true;
     _totalProductData = 0;
     _productPage = 1;
@@ -359,7 +407,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 16.0,
                                 0.0,
                               ),
-                              child: Column(
+                              child:
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -381,6 +430,106 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                       0.0,
                                     ),
                                     child: buildHomeFeaturedProducts(context),
+                                  ),
+                                ],
+                              ),
+                            ),
+                           /* Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                16.0,
+                                16.0,
+                                16.0,
+                                0.0,
+                              ),
+                              child:
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "New Products ",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      4.0,
+                                      16.0,
+                                      8.0,
+                                      0.0,
+                                    ),
+                                    child: buildHomeNewProducts(context),
+                                  ),
+                                ],
+                              ),
+                            ),*/
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                16.0,
+                                16.0,
+                                16.0,
+                                0.0,
+                              ),
+                              child:
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Todays Deal ",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      4.0,
+                                      16.0,
+                                      8.0,
+                                      0.0,
+                                    ),
+                                    child: buildHomeTodaysDealProducts(context),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                16.0,
+                                16.0,
+                                16.0,
+                                0.0,
+                              ),
+                              child:
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Best Selling",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                      4.0,
+                                      16.0,
+                                      8.0,
+                                      0.0,
+                                    ),
+                                    child: buildHomeBestSellingProducts(context),
                                   ),
                                 ],
                               ),
@@ -433,6 +582,129 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
               main_price: _featuredProductList[index].main_price,
               stroked_price: _featuredProductList[index].stroked_price,
               has_discount: _featuredProductList[index].has_discount);
+        },
+      );
+    } else if (_totalProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildHomeBestSellingProducts(context) {
+    if (_isProductInitial && _bestSellingProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper().buildProductGridShimmer(
+              scontroller: _bestSellingProductScrollController));
+    } else if (_bestSellingProductList.length > 0) {
+      //snapshot.hasData
+
+      return GridView.builder(
+        // 2
+        //addAutomaticKeepAlives: true,
+        itemCount: _bestSellingProductList.length,
+        controller: _bestSellingProductScrollController,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.618),
+        padding: EdgeInsets.all(8),
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          // 3
+          return ProductCard(
+              id: _bestSellingProductList[index].id,
+              image: _bestSellingProductList[index].thumbnail_image,
+              name: _bestSellingProductList[index].name,
+              main_price: _bestSellingProductList[index].main_price,
+              stroked_price: _bestSellingProductList[index].stroked_price,
+              has_discount: _bestSellingProductList[index].has_discount);
+        },
+      );
+    } else if (_totalProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildHomeNewProducts(context) {
+    if (_isProductInitial && _newProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper().buildProductGridShimmer(
+              scontroller: _newProductScrollController));
+    } else if (_newProductList.length > 0) {
+      //snapshot.hasData
+
+      return GridView.builder(
+        // 2
+        //addAutomaticKeepAlives: true,
+        itemCount: _newProductList.length,
+        controller: _newProductScrollController,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.618),
+        padding: EdgeInsets.all(8),
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          // 3
+          return ProductCard(
+              id: _newProductList[index].id,
+              image: _newProductList[index].thumbnail_image,
+              name: _newProductList[index].name,
+              main_price: _newProductList[index].main_price,
+              stroked_price: _newProductList[index].stroked_price,
+              has_discount: _newProductList[index].has_discount);
+        },
+      );
+    } else if (_totalProductData == 0) {
+      return Center(
+          child: Text(
+              AppLocalizations.of(context).common_no_product_is_available));
+    } else {
+      return Container(); // should never be happening
+    }
+  }
+
+  buildHomeTodaysDealProducts(context) {
+    if (_isProductInitial && _todaysDealProductList.length == 0) {
+      return SingleChildScrollView(
+          child: ShimmerHelper().buildProductGridShimmer(
+              scontroller: _todaysDealProductScrollController));
+    } else if (_todaysDealProductList.length > 0) {
+      //snapshot.hasData
+
+      return GridView.builder(
+        // 2
+        //addAutomaticKeepAlives: true,
+        itemCount: _todaysDealProductList.length,
+        controller: _todaysDealProductScrollController,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 0.618),
+        padding: EdgeInsets.all(8),
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          // 3
+          return ProductCard(
+              id: _todaysDealProductList[index].id,
+              image: _todaysDealProductList[index].thumbnail_image,
+              name: _todaysDealProductList[index].name,
+              main_price: _todaysDealProductList[index].main_price,
+              stroked_price: _todaysDealProductList[index].stroked_price,
+              has_discount: _todaysDealProductList[index].has_discount);
         },
       );
     } else if (_totalProductData == 0) {

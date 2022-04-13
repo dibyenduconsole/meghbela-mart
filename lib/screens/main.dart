@@ -31,13 +31,12 @@ class _MainState extends State<Main> {
     CategoryList(
       is_base_category: true,
     ),
-    Home(),
     Cart(has_bottomnav: true),
     Profile()
   ];
 
   void onTapped(int i) {
-    if (!is_logged_in.$ && (i == 4 || i == 3)) {
+    if (!is_logged_in.$ && (i == 2 || i == 3)) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
       return;
     }
@@ -79,7 +78,7 @@ class _MainState extends State<Main> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           //specify the location of the FAB
-          floatingActionButton: Visibility(
+          /*floatingActionButton: Visibility(
             visible: MediaQuery.of(context).viewInsets.bottom ==
                 0.0, // if the kyeboard is open then hide, else show
             child: FloatingActionButton(
@@ -101,9 +100,9 @@ class _MainState extends State<Main> {
                       })),
               elevation: 0.0,
             ),
-          ),
+          ),*/
           bottomNavigationBar: BottomAppBar(
-            color: Colors.transparent,
+            color: Colors.white,
             clipBehavior: Clip.antiAlias,
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 1.0, sigmaY: 1.0),
@@ -147,17 +146,17 @@ class _MainState extends State<Main> {
                           style: TextStyle(fontSize: 12),
                         ),
                       )),
-                  BottomNavigationBarItem(
+                  /*BottomNavigationBarItem(
                     icon: Icon(
                       Icons.circle,
                       color: Colors.transparent,
                     ),
                     title: Text(""),
-                  ),
+                  ),*/
                   BottomNavigationBarItem(
                       icon: Image.asset(
                         "assets/cart.png",
-                        color: _currentIndex == 3
+                        color: _currentIndex == 2
                             ? Theme.of(context).accentColor
                             : Color.fromRGBO(153, 153, 153, 1),
                         height: 20,
@@ -173,7 +172,7 @@ class _MainState extends State<Main> {
                   BottomNavigationBarItem(
                     icon: Image.asset(
                       "assets/profile.png",
-                      color: _currentIndex == 4
+                      color: _currentIndex == 3
                           ? Theme.of(context).accentColor
                           : Color.fromRGBO(153, 153, 153, 1),
                       height: 20,

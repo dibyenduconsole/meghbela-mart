@@ -1,5 +1,6 @@
 // ignore_for_file: missing_return
 
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
@@ -42,29 +43,54 @@ class _OtpState extends State<Otp> {
   void initState() {
     //on Splash Screen hide statusbar
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+    startTimer();
     super.initState();
   }
 
   @override
   void dispose() {
     //before going to other screen show statusbar
+    _timer.cancel();
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.dispose();
   }
 
-  // onTapResend() async {
-  //   var resendCodeResponse = await AuthRepository()
-  //       .getResendCodeResponse(widget.user_id, widget.verify_by);
+  Timer _timer;
+  int _start = 30;
 
-  //   if (resendCodeResponse.result == false) {
-  //     ToastComponent.showDialog(resendCodeResponse.message, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   } else {
-  //     ToastComponent.showDialog(resendCodeResponse.message, context,
-  //         gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-  //   }
-  // }
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+  onTapResend() async {
+    _start = 30;
+    startTimer();
+    await AuthRepository()
+        .getSendOtpResponse(context, widget.phNo, "1", 0)
+        .then((value) {
+      if (jsonDecode(value.toString())["result"] == true) {
+      ToastComponent.showDialog(jsonDecode(value.toString())["message"], context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    } else {
+      ToastComponent.showDialog(jsonDecode(value.toString())["message"], context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+    }
+    });
+ }
 
   // onPressConfirm() async {
   //   var code = _verificationCodeController.text.toString();
@@ -314,15 +340,24 @@ class _OtpState extends State<Otp> {
                       padding: const EdgeInsets.only(top: 100),
                       child: InkWell(
                         onTap: () {
-                          //onTapResend();
+                          if(_start == 0){
+                            print("==resendOTP");
+                            onTapResend();
+                          }
                         },
-                        child: Text(
+                        child: _start == 0?Text(
                             AppLocalizations.of(context).otp_screen_resend_code,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: MyTheme.white,
                                 decoration: TextDecoration.underline,
-                                fontSize: 13)),
+                                fontSize: 13))
+                            :Text(
+                            "Resend OTP in\n$_start",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: MyTheme.white,
+                                fontSize: 13))
                       ),
                     ),
                   ],

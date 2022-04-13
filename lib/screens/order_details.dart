@@ -448,7 +448,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ])),
                 SliverList(
                     delegate:
-                        SliverChildListDelegate([buildPaymentButtonSection()]))
+                        SliverChildListDelegate([buildPaymentButtonSection()])),
+
+                SliverList(
+                    delegate:
+                    SliverChildListDelegate([buildDownloadInvoiceButton()]))
               ],
             ),
           ),
@@ -1015,6 +1019,45 @@ class _OrderDetailsState extends State<OrderDetails> {
             Row(
               children: [
                 Text(
+                  "Delivery Date",
+                  style: TextStyle(
+                      color: MyTheme.font_grey,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                  "",
+                  style: TextStyle(
+                      color: MyTheme.font_grey,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: [
+                  Text(
+                    _orderDetails.delivery_date,
+                    style: TextStyle(
+                      color: MyTheme.grey_153,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "",
+                    style: TextStyle(
+                      color: MyTheme.grey_153,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              children: [
+                Text(
                   "Payment Status",
                   style: TextStyle(
                       color: MyTheme.font_grey,
@@ -1399,6 +1442,40 @@ class _OrderDetailsState extends State<OrderDetails> {
         ],
       ),
     );
+  }
+
+  buildDownloadInvoiceButton(){
+    return
+      Padding(
+        padding:
+        const EdgeInsets.only(top: 30.0, left: 100, right: 100),
+        child: Container(
+          height: 45,
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: MyTheme.textfield_grey, width: 1),
+              borderRadius:
+              const BorderRadius.all(Radius.circular(40.0))),
+          child: FlatButton(
+            minWidth: MediaQuery.of(context).size.width,
+            //height: 50,
+            color: MyTheme.golden,
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                const BorderRadius.all(Radius.circular(40.0))),
+            child: Text(
+              "Download invoice",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+            ),
+            onPressed: () {
+
+            },
+          ),
+        ),
+      );
   }
 
   Container buildPaymentStatusCheckContainer(String payment_status) {

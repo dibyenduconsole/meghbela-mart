@@ -46,6 +46,7 @@ class DetailedOrder {
     this.payment_status,
     this.payment_status_string,
     this.delivery_status,
+    this.delivery_date,
     this.delivery_status_string,
     this.grand_total,
     this.coupon_discount,
@@ -69,6 +70,7 @@ class DetailedOrder {
   String payment_status;
   String payment_status_string;
   String delivery_status;
+  String delivery_date;
   String delivery_status_string;
   String grand_total;
   String coupon_discount;
@@ -93,6 +95,7 @@ class DetailedOrder {
     payment_status: json["payment_status"],
     payment_status_string: json["payment_status_string"],
     delivery_status: json["delivery_status"],
+    delivery_date: json["delivery_date"],
     delivery_status_string: json["delivery_status_string"],
     grand_total: json["grand_total"],
     coupon_discount: json["coupon_discount"],
@@ -116,6 +119,7 @@ class DetailedOrder {
     "payment_status": payment_status,
     "payment_status_string": payment_status_string,
     "delivery_status": delivery_status,
+    "delivery_date": delivery_date,
     "delivery_status_string": delivery_status_string,
     "grand_total": grand_total,
     "coupon_discount": coupon_discount,

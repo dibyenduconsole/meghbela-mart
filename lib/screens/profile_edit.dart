@@ -11,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:active_ecommerce_flutter/helpers/file_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileEdit extends StatefulWidget {
   @override
@@ -94,7 +95,14 @@ class _ProfileEditState extends State<ProfileEdit> {
       }
     }
   }
-
+  _launchURL(String _url) async {
+    String url = _url;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
   Future<void> _onPageRefresh() async {}
 
   onPressUpdate() async {
@@ -450,9 +458,33 @@ backgroundColor: Colors.white,
                 ),
               ],
             ),*/
+            SizedBox(height: 50,),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Please update your details from",
+                style: TextStyle(
+                    color: MyTheme.font_grey, fontWeight: FontWeight.w600),
+              ),
+            ),
+            SizedBox(height: 5,),
+            Align(
+              alignment: Alignment.center,
+              child: InkWell(child: Text(
+                "https://www.meghbelamart.com/profile",
+                style: TextStyle(
+                    color: MyTheme.accent_color, fontWeight: FontWeight.w600),
+              ),
+                onTap: (){
+                _launchURL("https://www.meghbelamart.com/profile");
+                },
+              )
+            ),
           ],
         ),
       ),
     );
   }
+
+
 }
