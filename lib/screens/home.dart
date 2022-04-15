@@ -349,7 +349,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               ),
                               child: buildHomeCarouselSlider(context),
                             ),
-                            Padding(
+                            /*Padding(
                               padding: const EdgeInsets.fromLTRB(
                                 8.0,
                                 16.0,
@@ -357,7 +357,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                 0.0,
                               ),
                               child: buildHomeMenuRow(context),
-                            ),
+                            ),*/
                           ]),
                         ),
                         SliverList(

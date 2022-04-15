@@ -35,8 +35,8 @@ class AppConfig {
   //configure this if you are using amazon s3 like services
   //give direct link to file like https://[[bucketname]].s3.ap-southeast-1.amazonaws.com/
   //otherwise do not change anythink
-  static const String BASE_PATH = "${RAW_BASE_URL}/${PUBLIC_FOLDER}/";
-  //static const String BASE_PATH = "https://tosoviti.s3.ap-southeast-2.amazonaws.com/";
+  //static const String BASE_PATH = "${RAW_BASE_URL}/${PUBLIC_FOLDER}/";
+  static const String BASE_PATH = "https://d2bi56w5lxny86.cloudfront.net/";
   static const String BASE_terms = "https://www.meghbelamart.com/terms";
   static const String BASE_privacy_policy = "https://www.meghbelamart.com/privacy-policy";
   static const String BASE_refund_policy = "https://www.meghbelamart.com/refund-policy";

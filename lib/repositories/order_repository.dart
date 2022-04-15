@@ -39,12 +39,13 @@ class OrderRepository {
     return orderDetailResponseFromJson(response.body);
   }
 
-  Future<String> cancelOrderDetails({@required int id = 0}) async {
+  Future<String> cancelOrderDetails({@required int id = 0, String phone}) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/auth/change-delivery-status");
 
     var post_body = jsonEncode({
-      "code": id
+      "code": id,
+      "phone": phone
     });
     log("=Request: \n$url\n" + post_body);
     final response = await http.post(url,

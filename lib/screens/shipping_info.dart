@@ -195,14 +195,15 @@ class _ShippingInfoState extends State<ShippingInfo> {
     await AddressRepository()
         .getEmailVerify(_phone, _seleted_shipping_address_pincode)
         .then((value) {
-      if (jsonDecode(value.toString())["result"] == true) {
-        onPressProceed(context);
-      }else if(jsonDecode(value.toString())["message"].toString().contains("postalcode")) {
-        ToastComponent.showDialog(
-            jsonDecode(value.toString())["message"], context,
-            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-      }
-      else {
+      if (jsonDecode(value.toString())["resultEmail"] == true) {
+        if(jsonDecode(value.toString())["resultPin"] == true){
+          onPressProceed(context);
+        }else{
+          ToastComponent.showDialog(
+              jsonDecode(value.toString())["message"], context,
+              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        }
+      }else{
         _displayUpdateEmailInputDialog(context);
       }
     });
@@ -918,8 +919,15 @@ class _ShippingInfoState extends State<ShippingInfo> {
               child: Text('OK'),
               onPressed: () {
                 print(_textFieldEmailController.text);
-                Navigator.pop(context);
-                updateEmailVerify(user_phone.$.replaceAll("+91", ""), _textFieldEmailController.text);
+                if(_textFieldEmailController.text.isNotEmpty)
+                {
+                  Navigator.pop(context);
+                  updateEmailVerify(user_phone.$.replaceAll("+91", ""), _textFieldEmailController.text);
+                }else{
+                  ToastComponent.showDialog(
+                      "Enter email address", context,
+                      gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+                }
               },
             ),
           ],
