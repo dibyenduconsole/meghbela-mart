@@ -6,6 +6,8 @@ import 'package:active_ecommerce_flutter/data_model/wishlist_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class WishListRepository {
   Future<WishlistResponse> getUserWishlist() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/wishlists");
@@ -16,8 +18,8 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return wishlistResponseFromJson(response.body);
   }
 
@@ -32,8 +34,8 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return wishlistDeleteResponseFromJson(response.body);
   }
 
@@ -48,8 +50,8 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return wishListChekResponseFromJson(response.body);
   }
 
@@ -57,7 +59,7 @@ class WishListRepository {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/wishlists-add-product?product_id=${product_id}");
 
-    print(url.toString());
+    Utils.logResponse(url.toString());
     final response = await http.get(
       url,
       headers: {
@@ -65,8 +67,8 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return wishListChekResponseFromJson(response.body);
   }
 
@@ -80,8 +82,8 @@ class WishListRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return wishListChekResponseFromJson(response.body);
   }
 }

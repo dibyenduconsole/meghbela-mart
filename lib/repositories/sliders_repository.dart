@@ -2,6 +2,8 @@ import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/slider_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
+
+import '../utils_log.dart';
 class SlidersRepository {
   Future<SliderResponse> getSliders() async {
 
@@ -11,8 +13,8 @@ class SlidersRepository {
           headers: {
             "App-Language": app_language.$,
           },);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return sliderResponseFromJson(response.body);
   }
 }

@@ -3,6 +3,8 @@ import 'package:active_ecommerce_flutter/data_model/business_setting_response.da
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../utils_log.dart';
+
 
 class BusinessSettingRepository{
   Future<List<BusinessSettingListResponse>> getBusinessSettingList()async{
@@ -20,10 +22,10 @@ class BusinessSettingRepository{
       //'keys':params
       "keys":params
     };
-    print("business ${body}");
+    Utils.logResponse("business ${body}");
     var response = await http.post(url,body: body);
 
-    print("business ${response.body}");
+    Utils.logResponse("business ${response.body}");
 
     return businessSettingListResponseFromJson(response.body);
   }

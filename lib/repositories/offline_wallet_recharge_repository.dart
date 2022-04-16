@@ -5,6 +5,8 @@ import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../utils_log.dart';
+
 class OfflineWalletRechargeRepository{
  Future<OfflineWalletRechargeResponse> getOfflineWalletRechargeResponse({@required String amount,
   @required String name,
@@ -26,9 +28,9 @@ class OfflineWalletRechargeRepository{
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
      return offlineWalletRechargeResponseFromJson(response.body);
   }
 }

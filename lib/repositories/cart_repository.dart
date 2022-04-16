@@ -9,6 +9,8 @@ import 'package:active_ecommerce_flutter/data_model/cart_add_response.dart';
 import 'package:active_ecommerce_flutter/data_model/cart_summary_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class CartRepository {
   Future<List<CartResponse>> getCartResponseList(
     @required int user_id,
@@ -22,8 +24,8 @@ class CartRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return cartResponseFromJson(response.body);
   }
 
@@ -39,8 +41,8 @@ class CartRepository {
         "App-Language": app_language.$
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return cartDeleteResponseFromJson(response.body);
   }
 
@@ -58,9 +60,9 @@ class CartRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return cartProcessResponseFromJson(response.body);
   }
 
@@ -87,15 +89,15 @@ class CartRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return cartAddResponseFromJson(response.body);
   }
 
   Future<CartSummaryResponse> getCartSummaryResponse() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/cart-summary");
-    print(" cart summary");
+    Utils.logResponse(" cart summary");
     final response = await http.get(
       url,
       headers: {
@@ -104,12 +106,12 @@ class CartRepository {
         "App-Language": app_language.$
       },
     );
-    print("access token ${access_token.$}");
+    Utils.logResponse("access token ${access_token.$}");
 
-    print("cart summary res ${response.body}");
+    Utils.logResponse("cart summary res ${response.body}");
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
 
     return cartSummaryResponseFromJson(response.body);
   }

@@ -8,6 +8,8 @@ import 'package:active_ecommerce_flutter/data_model/conversation_create_response
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
+import '../utils_log.dart';
+
 class ChatRepository {
   Future<ConversationResponse> getConversationResponse(
       {@required page = 1}) async {
@@ -20,8 +22,8 @@ class ChatRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return conversationResponseFromJson(response.body);
   }
 
@@ -36,8 +38,8 @@ class ChatRepository {
         "App-Language": app_language.$
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return messageResponseFromJson(response.body);
   }
 
@@ -57,9 +59,9 @@ class ChatRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return messageResponseFromJson(response.body);
   }
 
@@ -74,8 +76,8 @@ class ChatRepository {
         "App-Language": app_language.$
       },
     );
-    /* print("${AppConfig.BASE_URL}/chat/get-new-messages/${conversation_id}/${last_message_id}");
-    print(response.body.toString());*/
+    /* Utils.logResponse("${AppConfig.BASE_URL}/chat/get-new-messages/${conversation_id}/${last_message_id}");
+    Utils.logResponse(response.body.toString());*/
     return messageResponseFromJson(response.body);
   }
 

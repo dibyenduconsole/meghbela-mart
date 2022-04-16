@@ -7,6 +7,8 @@ import 'package:active_ecommerce_flutter/data_model/offline_payment_submit_respo
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
+import '../utils_log.dart';
+
 class OfflinePaymentRepository {
   Future<OfflinePaymentSubmitResponse> getOfflinePaymentSubmitResponse(
       {@required int order_id,
@@ -31,9 +33,9 @@ class OfflinePaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return offlinePaymentSubmitResponseFromJson(response.body);
   }
 

@@ -11,6 +11,8 @@ import 'package:active_ecommerce_flutter/data_model/phone_email_availability_res
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
+import '../utils_log.dart';
+
 class ProfileRepository {
 
 
@@ -23,8 +25,8 @@ class ProfileRepository {
         "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return profileCountersResponseFromJson(response.body);
   }
 
@@ -37,9 +39,9 @@ class ProfileRepository {
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return profileUpdateResponseFromJson(response.body);
   }
 
@@ -52,9 +54,9 @@ class ProfileRepository {
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return deviceTokenUpdateResponseFromJson(response.body);
   }
 
@@ -62,15 +64,15 @@ class ProfileRepository {
       @required String image,@required String filename) async {
 
     var post_body = jsonEncode({"image": "${image}", "filename": "$filename"});
-    //print(post_body.toString());
+    //Utils.logResponse(post_body.toString());
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/profile/update-image");
     final response = await http.post(url,
         headers: {"Content-Type": "application/json", "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,},body: post_body );
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return profileImageUpdateResponseFromJson(response.body);
   }
 
@@ -82,8 +84,8 @@ class ProfileRepository {
     final response = await http.post(url,
         headers: {"Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,});
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return phoneEmailAvailabilityResponseFromJson(response.body);
   }
 

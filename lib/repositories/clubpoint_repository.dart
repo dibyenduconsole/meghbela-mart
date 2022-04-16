@@ -6,12 +6,14 @@ import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/data_model/clubpoint_response.dart';
 import 'package:active_ecommerce_flutter/data_model/clubpoint_to_wallet_response.dart';
 
+import '../utils_log.dart';
+
 class ClubpointRepository {
   Future<ClubpointResponse> getClubPointListResponse(
       {@required page = 1}) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/clubpoint/get-list?page=$page");
-    // print("url(${url.toString()}) access token (Bearer ${access_token.$})");
+    // Utils.logResponse("url(${url.toString()}) access token (Bearer ${access_token.$})");
     final response = await http.get(
       url,
       headers: {
@@ -20,8 +22,8 @@ class ClubpointRepository {
         "App-Language": app_language.$
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return clubpointResponseFromJson(response.body);
   }
 
@@ -38,9 +40,9 @@ class ClubpointRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return clubpointToWalletResponseFromJson(response.body);
   }
 }

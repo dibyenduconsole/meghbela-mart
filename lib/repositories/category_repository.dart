@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/category_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class CategoryRepository {
 
   Future<CategoryResponse> getCategories({parent_id = 0}) async {
@@ -11,8 +13,8 @@ class CategoryRepository {
     await http.get(url,headers: {
       "App-Language": app_language.$,
     });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return categoryResponseFromJson(response.body);
   }
 
@@ -22,8 +24,8 @@ class CategoryRepository {
         await http.get(url,headers: {
           "App-Language": app_language.$,
         });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return categoryResponseFromJson(response.body);
   }
 
@@ -33,8 +35,8 @@ class CategoryRepository {
     await http.get(url,headers: {
       "App-Language": app_language.$,
     });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return categoryResponseFromJson(response.body);
   }
 
@@ -44,8 +46,8 @@ class CategoryRepository {
     await http.get(url,headers: {
       "App-Language": app_language.$,
     });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return categoryResponseFromJson(response.body);
   }
 

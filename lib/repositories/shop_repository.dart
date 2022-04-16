@@ -6,6 +6,8 @@ import 'package:active_ecommerce_flutter/data_model/product_mini_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class ShopRepository {
   Future<ShopResponse> getShops({name = "", page = 1}) async {
     Uri url =
@@ -15,8 +17,8 @@ class ShopRepository {
       headers: {
         "App-Language": app_language.$,
       },);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return shopResponseFromJson(response.body);
   }
 
@@ -28,8 +30,8 @@ class ShopRepository {
           headers: {
             "App-Language": app_language.$,
           },);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return shopDetailsResponseFromJson(response.body);
   }
 
@@ -41,8 +43,8 @@ class ShopRepository {
       headers: {
         "App-Language": app_language.$,
       },);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return productMiniResponseFromJson(response.body);
   }
 
@@ -54,8 +56,8 @@ class ShopRepository {
       headers: {
         "App-Language": app_language.$,
       },);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return productMiniResponseFromJson(response.body);
   }
 
@@ -68,8 +70,8 @@ class ShopRepository {
       headers: {
         "App-Language": app_language.$,
       },);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return productMiniResponseFromJson(response.body);
   }
 }

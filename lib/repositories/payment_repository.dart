@@ -17,6 +17,8 @@ import 'package:active_ecommerce_flutter/data_model/nagad_payment_process_respon
 
 import 'package:active_ecommerce_flutter/data_model/sslcommerz_begin_response.dart';
 
+import '../utils_log.dart';
+
 class PaymentRepository {
   Future<List<PaymentTypeResponse>> getPaymentResponseList(
       {mode = "", list = "both"}) async {
@@ -25,8 +27,8 @@ class PaymentRepository {
     final response = await http.get(url, headers: {
       "App-Language": app_language.$,
     });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return paymentTypeResponseFromJson(response.body);
   }
 
@@ -42,9 +44,9 @@ class PaymentRepository {
           "App-Language": app_language.$,
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return orderCreateResponseFromJson(response.body);
   }
 
@@ -57,8 +59,8 @@ class PaymentRepository {
       "App-Language": app_language.$,
     });
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return paypalUrlResponseFromJson(response.body);
   }
 
@@ -73,8 +75,8 @@ class PaymentRepository {
       "App-Language": app_language.$,
     });
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return flutterwaveUrlResponseFromJson(response.body);
   }
 
@@ -96,9 +98,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return orderCreateResponseFromJson(response.body);
   }
 
@@ -116,9 +118,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return orderCreateResponseFromJson(response.body);
   }
 
@@ -137,9 +139,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return orderCreateResponseFromJson(response.body);
   }
 
@@ -156,7 +158,7 @@ class PaymentRepository {
       "payment_details": "${payment_details}"
     });
 
-    print(post_body.toString());
+    Utils.logResponse(post_body.toString());
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/razorpay/success");
 
@@ -168,9 +170,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return razorpayPaymentSuccessResponseFromJson(response.body);
   }
 
@@ -195,9 +197,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return paystackPaymentSuccessResponseFromJson(response.body);
   }
 
@@ -222,9 +224,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return iyzicoPaymentSuccessResponseFromJson(response.body);
   }
 
@@ -240,8 +242,8 @@ class PaymentRepository {
       headers: {"Authorization": "Bearer ${access_token.$}"},
     );
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return bkashBeginResponseFromJson(response.body);
   }
 
@@ -267,9 +269,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return bkashPaymentProcessResponseFromJson(response.body);
   }
 
@@ -288,8 +290,8 @@ class PaymentRepository {
       },
     );
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return sslcommerzBeginResponseFromJson(response.body);
   }
 
@@ -308,8 +310,8 @@ class PaymentRepository {
       },
     );
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return nagadBeginResponseFromJson(response.body);
   }
 
@@ -336,9 +338,9 @@ class PaymentRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return nagadPaymentProcessResponseFromJson(response.body);
   }
 }

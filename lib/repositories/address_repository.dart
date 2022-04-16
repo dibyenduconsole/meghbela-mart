@@ -16,6 +16,8 @@ import 'package:active_ecommerce_flutter/data_model/shipping_cost_response.dart'
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
+import '../utils_log.dart';
+
 class AddressRepository {
   Future<String> getEmailVerify(String phNo, String postcode) async {
     var post_body = jsonEncode({
@@ -33,9 +35,9 @@ class AddressRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return response.body;
   }
 
@@ -55,9 +57,9 @@ class AddressRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return response.body;
   }
 
@@ -72,8 +74,8 @@ class AddressRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
 
     return addressResponseFromJson(response.body);
   }
@@ -103,9 +105,9 @@ class AddressRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return addressAddResponseFromJson(response.body);
   }
 
@@ -136,9 +138,9 @@ class AddressRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return addressUpdateResponseFromJson(response.body);
   }
 
@@ -162,9 +164,9 @@ class AddressRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return addressUpdateLocationResponseFromJson(response.body);
   }
 
@@ -183,9 +185,9 @@ class AddressRepository {
           "Authorization": "Bearer ${access_token.$}"
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return addressMakeDefaultResponseFromJson(response.body);
   }
 
@@ -200,8 +202,8 @@ class AddressRepository {
         "App-Language": app_language.$
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return addressDeleteResponseFromJson(response.body);
   }
 
@@ -210,8 +212,8 @@ class AddressRepository {
         "${AppConfig.BASE_URL}/cities-by-state/${state_id}?name=${name}");
     final response = await http.get(url);
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
 
     return cityResponseFromJson(response.body);
   }
@@ -227,8 +229,8 @@ class AddressRepository {
   Future<CountryResponse> getCountryList({name = ""}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/countries?name=${name}");
     final response = await http.get(url);
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return countryResponseFromJson(response.body);
   }
 
@@ -252,9 +254,9 @@ class AddressRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return shippingCostResponseFromJson(response.body);
   }
 
@@ -274,9 +276,9 @@ class AddressRepository {
           "App-Language": app_language.$
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return addressUpdateInCartResponseFromJson(response.body);
   }
 }

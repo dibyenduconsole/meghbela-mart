@@ -8,6 +8,8 @@ import 'package:active_ecommerce_flutter/data_model/review_submit_response.dart'
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter/foundation.dart';
 
+import '../utils_log.dart';
+
 class ReviewRepository {
   Future<ReviewResponse> getReviewResponse(@required int product_id,{page = 1}) async {
 
@@ -19,8 +21,8 @@ class ReviewRepository {
         "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return reviewResponseFromJson(response.body);
   }
 
@@ -44,9 +46,9 @@ class ReviewRepository {
           "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return reviewSubmitResponseFromJson(response.body);
   }
 

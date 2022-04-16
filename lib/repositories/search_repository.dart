@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/search_suggestion_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class SearchRepository {
   Future<List<SearchSuggestionResponse>> getSearchSuggestionListResponse(
       {query_key = "", type = "product"}) async {
@@ -15,8 +17,8 @@ class SearchRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return searchSuggestionResponseFromJson(response.body);
   }
 }

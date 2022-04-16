@@ -4,6 +4,8 @@ import 'package:active_ecommerce_flutter/data_model/wallet_balance_response.dart
 import 'package:active_ecommerce_flutter/data_model/wallet_recharge_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class WalletRepository {
   Future<WalletBalanceResponse> getBalance() async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/wallet/balance");
@@ -14,8 +16,8 @@ class WalletRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return walletBalanceResponseFromJson(response.body);
   }
 
@@ -31,8 +33,8 @@ class WalletRepository {
       },
     );
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return walletRechargeResponseFromJson(response.body);
   }
 }

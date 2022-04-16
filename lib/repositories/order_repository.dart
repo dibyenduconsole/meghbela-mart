@@ -9,20 +9,22 @@ import 'package:active_ecommerce_flutter/data_model/order_detail_response.dart';
 import 'package:active_ecommerce_flutter/data_model/order_item_response.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 
+import '../utils_log.dart';
+
 class OrderRepository {
   Future<OrderMiniResponse> getOrderList(
       {page = 1, payment_status = "", delivery_status = ""}) async {
     Uri url = Uri.parse("${AppConfig.BASE_URL}/purchase-history" +
         "?page=${page}&payment_status=${payment_status}&delivery_status=${delivery_status}");
-    print("url:" +url.toString());
-    print("token:" +access_token.$);
+    Utils.logResponse("url:" +url.toString());
+    Utils.logResponse("token:" +access_token.$);
     final response = await http.get(url,headers: {
       "Authorization": "Bearer ${access_token.$}",
       "App-Language": app_language.$,
         });
 
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return orderMiniResponseFromJson(response.body);
   }
 
@@ -34,8 +36,8 @@ class OrderRepository {
       "Authorization": "Bearer ${access_token.$}",
           "App-Language": app_language.$,
         });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return orderDetailResponseFromJson(response.body);
   }
 
@@ -56,9 +58,9 @@ class OrderRepository {
         },
         body: post_body);
 
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return response.body;
   }
 
@@ -69,8 +71,8 @@ class OrderRepository {
       "Authorization": "Bearer ${access_token.$}",
       "App-Language": app_language.$,
         });
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return orderItemlResponseFromJson(response.body);
   }
 }

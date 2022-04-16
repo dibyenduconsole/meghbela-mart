@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:active_ecommerce_flutter/data_model/refund_request_response.dart';
 import 'package:active_ecommerce_flutter/data_model/refund_request_send_response.dart';
 
+import '../utils_log.dart';
+
 class RefundRequestRepository {
 
   Future<RefundRequestResponse> getRefundRequestListResponse({@required page = 1}) async {
@@ -19,8 +21,8 @@ class RefundRequestRepository {
         "App-Language": app_language.$,
       },
     );
-    print("URL: "+url.toString());
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
     return refundRequestResponseFromJson(response.body);
   }
 
@@ -39,9 +41,9 @@ class RefundRequestRepository {
           "Authorization": "Bearer ${access_token.$}","App-Language": app_language.$,
         },
         body: post_body);
-    print("URL: "+url.toString());
-    print("Request: "+post_body);
-    print("response: "+response.body);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
     return refundRequestSendResponseFromJson(response.body);
   }
 
