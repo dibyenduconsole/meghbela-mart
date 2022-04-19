@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:active_ecommerce_flutter/helpers/color_helper.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -90,7 +91,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       setStepIndex(_orderDetails.delivery_status);
     }*/
     await OrderRepository()
-        .cancelOrderDetails(id: widget.id, phone: user_phone.$.replaceAll("+91", ""))
+        .cancelOrderDetails(code: _orderDetails.code, phone: user_phone.$.replaceAll("+91", ""))
         .then((value) {
       if (jsonDecode(value.toString())["result"] == true) {
         ToastComponent.showDialog(
@@ -1046,7 +1047,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
-            _orderDetails.delivery_date != null ?Row(
+            _orderDetails.delivery_date == 0 ?Container()
+                :_orderDetails.delivery_date != null ?Row(
               children: [
                 Text(
                   "Delivery expected by",
@@ -1064,8 +1066,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                       fontWeight: FontWeight.w600),
                 ),
               ],
-            ):Padding(),
-            _orderDetails.delivery_date != null ?Padding(
+            ):Container(),
+            _orderDetails.delivery_date == 0 ?Container()
+                :_orderDetails.delivery_date != null ?Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
@@ -1084,7 +1087,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                 ],
               ),
-            ):Padding(),
+            ):Container(),
             Row(
               children: [
                 Text(
