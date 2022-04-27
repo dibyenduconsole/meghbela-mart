@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:active_ecommerce_flutter/helpers/color_helper.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -40,6 +42,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     'delivered'
   ];
 
+  var deliverDate = "";
   TextEditingController _refundReasonController = TextEditingController();
   bool _showReasonWarning = false;
 
@@ -88,7 +91,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       setStepIndex(_orderDetails.delivery_status);
     }*/
     await OrderRepository()
-        .cancelOrderDetails(id: widget.id, phone: user_phone.$.replaceAll("+91", ""))
+        .cancelOrderDetails(code: _orderDetails.code, phone: user_phone.$.replaceAll("+91", ""))
         .then((value) {
       if (jsonDecode(value.toString())["result"] == true) {
         ToastComponent.showDialog(
@@ -392,6 +395,7 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   @override
   Widget build(BuildContext context) {
+
     return WillPopScope(
       onWillPop: () {
         if (widget.from_notification || widget.go_back == false) {
@@ -1043,7 +1047,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
-            Row(
+            _orderDetails.delivery_date == 0 ?Container()
+                :_orderDetails.delivery_date != null ?Row(
               children: [
                 Text(
                   "Delivery expected by",
@@ -1061,13 +1066,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                       fontWeight: FontWeight.w600),
                 ),
               ],
-            ),
-            Padding(
+            ):Container(),
+            _orderDetails.delivery_date == 0 ?Container()
+                :_orderDetails.delivery_date != null ?Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Row(
                 children: [
                   Text(
-                    _orderDetails.delivery_date,
+                    ""+Utils.getDateFromTime(_orderDetails.delivery_date),//.toString(),
                     style: TextStyle(
                       color: MyTheme.grey_153,
                     ),
@@ -1081,7 +1087,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   ),
                 ],
               ),
-            ),
+            ):Container(),
             Row(
               children: [
                 Text(
@@ -1473,8 +1479,9 @@ class _OrderDetailsState extends State<OrderDetails> {
 
   buildDownloadInvoiceButton(){
     return
-      /*_orderDetails.delivery_status == "delivered"?Container()
-      :*/Padding(
+      _orderDetails == null ? Container()
+      :_orderDetails.delivery_status == "cancelled"?Container()
+      :Padding(
         padding:
         const EdgeInsets.only(top: 30.0, left: 100, right: 100),
         child: Container(

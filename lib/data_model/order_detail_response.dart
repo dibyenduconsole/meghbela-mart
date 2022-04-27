@@ -69,8 +69,8 @@ class DetailedOrder {
   String payment_type;
   String payment_status;
   String payment_status_string;
-  String delivery_status;
-  String delivery_date;
+  String delivery_status = "";
+  int delivery_date;
   String delivery_status_string;
   String grand_total;
   String coupon_discount;
