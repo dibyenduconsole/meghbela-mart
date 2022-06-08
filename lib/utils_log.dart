@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class Utils{
   static void logResponse(var value){
-    //print(value);
+    print(value);
   }
 
 

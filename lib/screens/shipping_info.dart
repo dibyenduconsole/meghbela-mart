@@ -4,6 +4,7 @@ import 'package:active_ecommerce_flutter/custom/scroll_to_hide_widget.dart';
 import 'package:active_ecommerce_flutter/data_model/pickup_points_response.dart';
 import 'package:active_ecommerce_flutter/repositories/pickup_points_repository.dart';
 import 'package:active_ecommerce_flutter/screens/checkout.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -195,6 +196,11 @@ class _ShippingInfoState extends State<ShippingInfo> {
     await AddressRepository()
         .getEmailVerify(_phone, _seleted_shipping_address_pincode)
         .then((value) {
+          if(jsonDecode(value.toString())["message"] == "This order can not delivery in this location."){
+            Utils.logResponse("message: "+jsonDecode(value.toString())["message"]);
+            Navigator.of(context).pop();
+            return;
+          }
       if (jsonDecode(value.toString())["resultEmail"] == true) {
         if(jsonDecode(value.toString())["resultPin"] == true){
           onPressProceed(context);
