@@ -357,7 +357,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     setState(() {
       deliveryMsg = "";
     });
-    var owner_id = user_id.$;
+    var owner_id = _productDetails.seller_id;
     Utils.logResponse("owner_id: "+owner_id.toString());
     Utils.logResponse("pincode: "+pincode.toString());
     var deliveryPicCodeResponse = await AddressRepository()

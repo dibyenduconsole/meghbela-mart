@@ -670,6 +670,23 @@ backgroundColor: Colors.white,
                         )
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: _shopList[seller_index].cart_items[item_index]
+                          .is_available!= null
+                          ? _shopList[seller_index].cart_items[item_index]
+                          .is_available == 0 ?Text(
+                        "This product is not delivery in your location.",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: MyTheme.font_grey,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w300),
+                      ):Container()
+                    :Container(),
+              )
                   ],
                 ),
               ),
