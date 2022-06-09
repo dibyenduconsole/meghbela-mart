@@ -1311,7 +1311,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/placeholder.png',
-                    image: AppConfig.BASE_PATH + _productDetails.shop_logo,
+                    image: _productDetails.shop_logo,
                     fit: BoxFit.cover,
                   ),
                 ),

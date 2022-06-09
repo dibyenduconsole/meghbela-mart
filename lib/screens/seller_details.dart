@@ -594,7 +594,7 @@ class _SellerDetailsState extends State<SellerDetails> {
             borderRadius: BorderRadius.circular(5),
             child: FadeInImage.assetNetwork(
               placeholder: 'assets/placeholder.png',
-              image: AppConfig.BASE_PATH + _shopDetails.logo,
+              image:  _shopDetails.logo,
               fit: BoxFit.cover,
             )),
       ),

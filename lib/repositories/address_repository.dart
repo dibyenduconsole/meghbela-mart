@@ -20,10 +20,11 @@ import 'package:flutter/foundation.dart';
 import '../utils_log.dart';
 
 class AddressRepository {
-  Future<String> getEmailVerify(String phNo, String postcode) async {
+  Future<String> getEmailVerify(String phNo, String postcode, String user_id) async {
     var post_body = jsonEncode({
       "phone": phNo,
-      "pincode": postcode
+      "pincode": postcode,
+      "user_id": user_id
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/check-email");

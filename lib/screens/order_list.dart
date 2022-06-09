@@ -361,7 +361,7 @@ class _OrderListState extends State<OrderList> {
                       : const EdgeInsets.only(top: 14.0),
                   child: buildTopAppBarContainer(),
                 ),
-                buildBottomAppBar(context)
+               // buildBottomAppBar(context)
               ],
             ),
           )),

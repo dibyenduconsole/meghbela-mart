@@ -53,6 +53,8 @@ class _ShippingInfoState extends State<ShippingInfo> {
   double mWidth = 0;
   double mHeight = 0;
 
+  bool dialoagDismiss = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -194,12 +196,18 @@ class _ShippingInfoState extends State<ShippingInfo> {
 
   checkEmailVerify(String _phone) async {
     await AddressRepository()
-        .getEmailVerify(_phone, _seleted_shipping_address_pincode)
+        .getEmailVerify(_phone, _seleted_shipping_address_pincode, user_id.$.toString())
         .then((value) {
           if(jsonDecode(value.toString())["message"] == "This order can not delivery in this location."){
             Utils.logResponse("message: "+jsonDecode(value.toString())["message"]);
-            Navigator.of(context).pop();
-            return;
+           // Navigator.of(context).pop();
+            //return;
+            _deliveryAlertDialog(context).then((value) {
+            Utils.logResponse("dialoagDismiss: "+dialoagDismiss.toString());
+             if(dialoagDismiss){
+               Navigator.of(context).pop();
+             }
+            });
           }
       if (jsonDecode(value.toString())["resultEmail"] == true) {
         if(jsonDecode(value.toString())["resultPin"] == true){
@@ -934,6 +942,39 @@ class _ShippingInfoState extends State<ShippingInfo> {
                       "Enter email address", context,
                       gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
                 }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+  Future<void> _deliveryAlertDialog(BuildContext context) async {
+    dialoagDismiss = false;
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delivery alert'),
+          content: Text(
+            "Some items in your order are not deliverable to the selected address.",
+            style: TextStyle(color: MyTheme.font_grey),
+          ),
+          actions: <Widget>[
+
+            FlatButton(color: MyTheme.golden,
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                  const BorderRadius.all(Radius.circular(40.0))),
+              child: Text("Update Cart",style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),),
+              onPressed: () {
+                dialoagDismiss = true;
+                Navigator.pop(context);
               },
             ),
           ],

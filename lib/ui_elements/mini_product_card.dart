@@ -45,7 +45,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                           top: Radius.circular(16), bottom: Radius.zero),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image: AppConfig.BASE_PATH + widget.image,
+                        image: widget.image != null?AppConfig.BASE_PATH + widget.image:"${AppConfig.ERROR_IMAGE}",
                         fit: BoxFit.cover,
                       ))),
               Padding(

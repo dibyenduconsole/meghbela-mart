@@ -42,7 +42,7 @@ class _ShopSquareCardState extends State<ShopSquareCard> {
                           top: Radius.circular(16), bottom: Radius.zero),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image: AppConfig.BASE_PATH + widget.image,
+                        image: widget.image,
                         fit: BoxFit.scaleDown,
                       ))),
               Container(

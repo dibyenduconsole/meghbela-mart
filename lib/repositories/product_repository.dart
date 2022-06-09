@@ -118,6 +118,7 @@ class ProductRepository {
       "App-Language": app_language.$,
     });
     Utils.logResponse("URL: "+url.toString());
+
     Utils.logResponse("response: "+response.body);
     return productDetailsResponseFromJson(response.body);
   }

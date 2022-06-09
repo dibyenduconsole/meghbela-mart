@@ -596,10 +596,12 @@ backgroundColor: Colors.white,
                 padding: const EdgeInsets.all(16.0),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: AppConfig.BASE_PATH +
+                  image:  _shopList[seller_index]
+                      .cart_items[item_index]
+                      .product_thumbnail_image != null?AppConfig.BASE_PATH +
                       _shopList[seller_index]
                           .cart_items[item_index]
-                          .product_thumbnail_image,
+                          .product_thumbnail_image:"${AppConfig.ERROR_IMAGE}",
                   fit: BoxFit.fitWidth,
                 ))),
         Container(
@@ -681,9 +683,9 @@ backgroundColor: Colors.white,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
-                            color: MyTheme.font_grey,
+                            color: Colors.red,
                             fontSize: 10,
-                            fontWeight: FontWeight.w300),
+                            fontWeight: FontWeight.w500),
                       ):Container()
                     :Container(),
               )
