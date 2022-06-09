@@ -9,3 +9,11 @@ Alais: MeghbelaMart
 exp: 45 years
 
 Tapabrata Mukherjee
+
+
+09/06/2022
+To change App version
+android -> local.properties
+
+flutter.versionName=1.0.7
+flutter.versionCode=7
