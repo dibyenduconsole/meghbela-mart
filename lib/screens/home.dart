@@ -13,6 +13,7 @@ import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:active_ecommerce_flutter/repositories/sliders_repository.dart';
@@ -774,8 +775,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                                   bottom: Radius.zero),
                               child: FadeInImage.assetNetwork(
                                 placeholder: 'assets/placeholder.png',
-                                image: AppConfig.BASE_PATH +
-                                    _featuredCategoryList[index].banner,
+                                image:Utils.getImageFilePath(_featuredCategoryList[index].banner) /*AppConfig.BASE_PATH +
+                                    _featuredCategoryList[index].banner*/,
                                 fit: BoxFit.cover,
                               ))),
                       Padding(
@@ -1043,7 +1044,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
-                            image: AppConfig.BASE_PATH + i,
+                            image: Utils.getImageFilePath(i)/*AppConfig.BASE_PATH + i*/,
                             fit: BoxFit.fill,
                           ))),
                   Align(

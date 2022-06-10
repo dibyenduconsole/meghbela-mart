@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
@@ -596,12 +597,9 @@ backgroundColor: Colors.white,
                 padding: const EdgeInsets.all(16.0),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image:  _shopList[seller_index]
+                  image: Utils.getImageFilePath(_shopList[seller_index]
                       .cart_items[item_index]
-                      .product_thumbnail_image != null?AppConfig.BASE_PATH +
-                      _shopList[seller_index]
-                          .cart_items[item_index]
-                          .product_thumbnail_image:"${AppConfig.ERROR_IMAGE}",
+                      .product_thumbnail_image),
                   fit: BoxFit.fitWidth,
                 ))),
         Container(

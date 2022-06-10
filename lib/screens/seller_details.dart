@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/screens/seller_products.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -306,7 +307,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                           borderRadius: BorderRadius.all(Radius.circular(8)),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
-                            image: AppConfig.BASE_PATH + i,
+                            image: Utils.getImageFilePath(i)/*AppConfig.BASE_PATH + i*/,
                             fit: BoxFit.fill,
                           ))),
                   Align(
@@ -532,7 +533,7 @@ class _SellerDetailsState extends State<SellerDetails> {
       elevation: 0.0,
       titleSpacing: 0,
       actions: <Widget>[
-        Padding(
+        /*Padding(
           padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
           child: IconButton(
             icon: Icon(Icons.location_on, color: MyTheme.dark_grey),
@@ -573,7 +574,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                       ));
             },
           ),
-        ),
+        ),*/
       ],
     );
   }
@@ -594,7 +595,7 @@ class _SellerDetailsState extends State<SellerDetails> {
             borderRadius: BorderRadius.circular(5),
             child: FadeInImage.assetNetwork(
               placeholder: 'assets/placeholder.png',
-              image:  _shopDetails.logo,
+              image:  Utils.getImageFilePath(_shopDetails.logo)/*_shopDetails.logo*/,
               fit: BoxFit.cover,
             )),
       ),
@@ -616,10 +617,10 @@ class _SellerDetailsState extends State<SellerDetails> {
                     fontWeight: FontWeight.w600),
               ),
             ),
-            Padding(
+            /*Padding(
               padding: EdgeInsets.fromLTRB(8, 4, 8, 8),
               child: buildRatingWithCountRow(),
-            ),
+            ),*/
           ],
         ),
       ),

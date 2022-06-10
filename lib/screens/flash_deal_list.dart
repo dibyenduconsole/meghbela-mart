@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:flutter_countdown_timer/index.dart';
@@ -194,8 +195,8 @@ class _FlashDealListState extends State<FlashDealList> {
                           borderRadius: BorderRadius.circular(16.0),
                           child: FadeInImage.assetNetwork(
                             placeholder: 'assets/placeholder_rectangle.png',
-                            image: AppConfig.BASE_PATH +
-                                flashDealResponse.flash_deals[index].banner,
+                            image: Utils.getImageFilePath(flashDealResponse.flash_deals[index].banner)/*AppConfig.BASE_PATH +
+                                flashDealResponse.flash_deals[index].banner*/,
                             fit: BoxFit.cover,
                           ))),
                 ),

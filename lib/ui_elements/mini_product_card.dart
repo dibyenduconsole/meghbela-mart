@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/screens/product_details.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
@@ -45,7 +46,7 @@ class _MiniProductCardState extends State<MiniProductCard> {
                           top: Radius.circular(16), bottom: Radius.zero),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image: widget.image != null?AppConfig.BASE_PATH + widget.image:"${AppConfig.ERROR_IMAGE}",
+                        image: Utils.getImageFilePath(widget.image)/*widget.image != null?AppConfig.BASE_PATH + widget.image:"${AppConfig.ERROR_IMAGE}"*/,
                         fit: BoxFit.cover,
                       ))),
               Padding(

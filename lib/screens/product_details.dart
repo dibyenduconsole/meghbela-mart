@@ -1311,7 +1311,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/placeholder.png',
-                    image: _productDetails.shop_logo,
+                    image: Utils.getImageFilePath(_productDetails.shop_logo)/*_productDetails.shop_logo*/,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -2052,7 +2052,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       borderRadius: BorderRadius.circular(5),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image: AppConfig.BASE_PATH + _productDetails.brand.logo,
+                        image:Utils.getImageFilePath(_productDetails.brand.logo) /*AppConfig.BASE_PATH + _productDetails.brand.logo*/,
                         fit: BoxFit.contain,
                       )),
                 ),
@@ -2368,8 +2368,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         singleProduct.product_images[index])*/
                                   FadeInImage.assetNetwork(
                                 placeholder: 'assets/placeholder.png',
-                                image: AppConfig.BASE_PATH +
-                                    _productImageList[index],
+                                image: Utils.getImageFilePath(_productImageList[index])/*AppConfig.BASE_PATH +
+                                    _productImageList[index]*/,
                                 fit: BoxFit.contain,
                               )),
                         ),
@@ -2380,8 +2380,8 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
           InkWell(
             onTap: () {
-              openPhotoDialog(context,
-                  AppConfig.BASE_PATH + _productImageList[_currentImage]);
+              openPhotoDialog(context, Utils.getImageFilePath(_productImageList[_currentImage])
+                  /*AppConfig.BASE_PATH + _productImageList[_currentImage]*/);
             },
             child: Container(
               height: 250,
@@ -2389,7 +2389,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Container(
                   child: FadeInImage.assetNetwork(
                 placeholder: 'assets/placeholder_rectangle.png',
-                image: AppConfig.BASE_PATH + _productImageList[_currentImage],
+                image: Utils.getImageFilePath(_productImageList[_currentImage])/*AppConfig.BASE_PATH + _productImageList[_currentImage]*/,
                 fit: BoxFit.scaleDown,
               )),
             ),

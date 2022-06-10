@@ -38,10 +38,10 @@ class AppConfig {
   //give direct link to file like https://[[bucketname]].s3.ap-southeast-1.amazonaws.com/
   //otherwise do not change anythink
   //static const String BASE_PATH = "${RAW_BASE_URL}/${PUBLIC_FOLDER}/";
-  static const String BASE_PATH = "https://d2bi56w5lxny86.cloudfront.net/";
+  static const String BASE_PATH = "https://dbimehz2m8qdt.cloudfront.net/";//"https://d2bi56w5lxny86.cloudfront.net/";
   static const String BASE_terms = "https://www.meghbelamart.com/terms";
   static const String BASE_privacy_policy = "https://www.meghbelamart.com/privacy-policy";
   static const String BASE_refund_policy = "https://www.meghbelamart.com/refund-policy";
-  static const String ERROR_IMAGE = "https://d2bi56w5lxny86.cloudfront.net/uploads/all/Oja3Eza7u8Jsun5wWIibmMp3zdQ2jyrmVQKVE2d5.png";
+  static const String ERROR_IMAGE = BASE_PATH+"uploads/all/Oja3Eza7u8Jsun5wWIibmMp3zdQ2jyrmVQKVE2d5.png";
 
 }

@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/chat.dart';
@@ -195,7 +196,7 @@ backgroundColor: Colors.white,
                 borderRadius: BorderRadius.circular(35),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: AppConfig.BASE_PATH + _list[index].shop_logo,
+                  image:Utils.getImageFilePath(_list[index].shop_logo) /*AppConfig.BASE_PATH + _list[index].shop_logo*/,
                   fit: BoxFit.contain,
                 )),
           ),
