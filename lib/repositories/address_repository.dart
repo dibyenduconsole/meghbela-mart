@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/delivery_pincode_check_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,10 +20,11 @@ import 'package:flutter/foundation.dart';
 import '../utils_log.dart';
 
 class AddressRepository {
-  Future<String> getEmailVerify(String phNo, String postcode) async {
+  Future<String> getEmailVerify(String phNo, String postcode, String user_id) async {
     var post_body = jsonEncode({
       "phone": phNo,
-      "pincode": postcode
+      "pincode": postcode,
+      "user_id": user_id
     });
 
     Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/check-email");
@@ -280,5 +282,28 @@ class AddressRepository {
     Utils.logResponse("Request: "+post_body);
     Utils.logResponse("response: "+response.body);
     return addressUpdateInCartResponseFromJson(response.body);
+  }
+
+  Future<DeliveryPicCodeResponse> getDeliveryPinCodeStatus(@required owner_id , @required pincode ) async {
+    Utils.logResponse("owner_id: "+owner_id);
+    Utils.logResponse("pincode: "+pincode);
+    var post_body = jsonEncode({
+      "owner_id": "$owner_id",
+      "pincode": "$pincode"
+    });
+
+    Uri url = Uri.parse("${AppConfig.BASE_URL}/auth/check-delivery-availability");
+    final response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer ${access_token.$}",
+          "App-Language": app_language.$
+        },
+        body: post_body);
+
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("Request: "+post_body);
+    Utils.logResponse("response: "+response.body);
+    return deliveryPicCodeResponseFromJson(response.body);
   }
 }

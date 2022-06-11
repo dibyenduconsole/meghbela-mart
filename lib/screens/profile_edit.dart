@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
@@ -249,7 +250,7 @@ backgroundColor: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(100.0)),
                     child: FadeInImage.assetNetwork(
                       placeholder: 'assets/placeholder.png',
-                      image: AppConfig.BASE_PATH + "${avatar_original.$}",
+                      image: Utils.getImageFilePath("${avatar_original.$}")/*AppConfig.BASE_PATH + "${avatar_original.$}"*/,
                       fit: BoxFit.fill,
                     )),
               ),

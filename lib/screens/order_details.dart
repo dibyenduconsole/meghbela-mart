@@ -1073,7 +1073,7 @@ class _OrderDetailsState extends State<OrderDetails> {
               child: Row(
                 children: [
                   Text(
-                    ""+Utils.getDateFromTime(_orderDetails.delivery_date),//.toString(),
+                    ""+_orderDetails.delivery_date,//.toString(),
                     style: TextStyle(
                       color: MyTheme.grey_153,
                     ),

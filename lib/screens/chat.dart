@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'dart:ui';
@@ -269,7 +270,8 @@ backgroundColor: Colors.white,
                         borderRadius: BorderRadius.circular(35),
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/placeholder.png',
-                          image: AppConfig.BASE_PATH + widget.messenger_image,
+                          //image: AppConfig.BASE_PATH + widget.messenger_image,
+                          image: Utils.getImageFilePath(widget.messenger_image),
                           fit: BoxFit.contain,
                         )),
                   ),

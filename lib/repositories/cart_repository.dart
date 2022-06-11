@@ -25,6 +25,8 @@ class CartRepository {
       },
     );
     Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("access_token: ${access_token.$}");
+    Utils.logResponse("App-Language:  ${app_language.$}");
     Utils.logResponse("response: "+response.body);
     return cartResponseFromJson(response.body);
   }

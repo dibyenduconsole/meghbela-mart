@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/ui_sections/drawer.dart';
@@ -596,10 +597,9 @@ backgroundColor: Colors.white,
                 padding: const EdgeInsets.all(16.0),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: AppConfig.BASE_PATH +
-                      _shopList[seller_index]
-                          .cart_items[item_index]
-                          .product_thumbnail_image,
+                  image: Utils.getImageFilePath(_shopList[seller_index]
+                      .cart_items[item_index]
+                      .product_thumbnail_image),
                   fit: BoxFit.fitWidth,
                 ))),
         Container(
@@ -670,6 +670,23 @@ backgroundColor: Colors.white,
                         )
                       ],
                     ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: _shopList[seller_index].cart_items[item_index]
+                          .is_available!= null
+                          ? _shopList[seller_index].cart_items[item_index]
+                          .is_available == 0 ?Text(
+                        "This product is not delivery in your location.",
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w500),
+                      ):Container()
+                    :Container(),
+              )
                   ],
                 ),
               ),

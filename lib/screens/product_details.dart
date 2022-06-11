@@ -1,3 +1,5 @@
+import 'package:active_ecommerce_flutter/custom/input_decorations.dart';
+import 'package:active_ecommerce_flutter/repositories/address_repository.dart';
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/common_webview_screen.dart';
 import 'package:active_ecommerce_flutter/screens/login.dart';
@@ -6,6 +8,7 @@ import 'package:active_ecommerce_flutter/ui_elements/list_product_card.dart';
 import 'package:active_ecommerce_flutter/ui_elements/mini_product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:expandable/expandable.dart';
@@ -30,6 +33,8 @@ import 'package:photo_view/photo_view.dart';
 import 'package:active_ecommerce_flutter/screens/brand_products.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../utils_log.dart';
+
 class ProductDetails extends StatefulWidget {
   int id;
 
@@ -50,6 +55,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
 
+  var deliveryMsg = "";
+  Color deliveryMsgColor = MyTheme.font_grey;
   //init values
   bool _isInWishList = false;
   var _productDetailsFetched = false;
@@ -343,6 +350,30 @@ class _ProductDetailsState extends State<ProductDetails> {
           onPopped(value);
         });
       }
+    }
+  }
+
+  checkDeliveryPinCode(String pincode) async {
+    setState(() {
+      deliveryMsg = "";
+    });
+    var owner_id = _productDetails.seller_id;
+    Utils.logResponse("owner_id: "+owner_id.toString());
+    Utils.logResponse("pincode: "+pincode.toString());
+    var deliveryPicCodeResponse = await AddressRepository()
+        .getDeliveryPinCodeStatus(owner_id.toString(), pincode.toString());
+
+    setState(() {
+      deliveryMsg = deliveryPicCodeResponse.message;
+    });
+    if (deliveryPicCodeResponse.success == true) {
+      setState(() {
+        deliveryMsgColor = MyTheme.font_grey;
+      });
+    } else {
+      setState(() {
+        deliveryMsgColor = Colors.red;
+      });
     }
   }
 
@@ -905,6 +936,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                     height: 24,
                   ),
                 ])),
+                // PIN code delivery check
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          16.0,
+                          0.0,
+                          16.0,
+                          0.0,
+                        ),
+                        child: _productDetails != null
+                            ? buildPINCodeDevliveryCheckRow(context)
+                            : ShimmerHelper().buildBasicShimmer(
+                          height: 50.0,
+                        ),
+                      ),
+                      Divider(
+                        height: 24,
+                      ),
+                    ])),
                 SliverList(
                   delegate: SliverChildListDelegate([
                     Padding(
@@ -1260,7 +1311,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   child: FadeInImage.assetNetwork(
                     placeholder: 'assets/placeholder.png',
-                    image: AppConfig.BASE_PATH + _productDetails.shop_logo,
+                    image: Utils.getImageFilePath(_productDetails.shop_logo)/*_productDetails.shop_logo*/,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -1317,7 +1368,68 @@ class _ProductDetailsState extends State<ProductDetails> {
       ],
     );
   }
-
+  //controllers
+  TextEditingController _pinCodeController = TextEditingController();
+  String _pinCode = "";
+  Container buildPINCodeDevliveryCheckRow(BuildContext context) {
+    //print("sl:" + AppConfig.BASE_PATH + _productDetails.shop_logo);
+    return
+        Container(
+          width: MediaQuery.of(context).size.width * (.5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Delivery ",
+                  style: TextStyle(
+                    color: Color.fromRGBO(153, 153, 153, 1),
+                  )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Container(
+                      height: 36,
+                      width: MediaQuery.of(context).size.width - (140),
+                      child: TextField(
+                          controller: _pinCodeController,
+                          keyboardType: TextInputType.number,
+                          autofocus: false,
+                          decoration:
+                          InputDecorations.buildInputDecoration_phone(
+                              hint_text: ""),
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(6),
+                          ],
+                          onChanged: (value) {
+                            _pinCode = value;
+                          }
+                      ),
+                    ),
+                  ),
+                  FlatButton(onPressed: (){
+                    checkDeliveryPinCode(_pinCode);
+                  },
+                      color: MyTheme.golden,
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(40.0))),
+                      child: Text("Check",style: TextStyle(
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: FontWeight.w600),))
+                ],
+              ),
+              Text(
+                deliveryMsg,
+                style: TextStyle(
+                    color: deliveryMsgColor,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w400),
+              )
+            ],
+          ));
+  }
   Row buildTotalPriceRow() {
     return Row(
       children: [
@@ -1940,7 +2052,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       borderRadius: BorderRadius.circular(5),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image: AppConfig.BASE_PATH + _productDetails.brand.logo,
+                        image:Utils.getImageFilePath(_productDetails.brand.logo) /*AppConfig.BASE_PATH + _productDetails.brand.logo*/,
                         fit: BoxFit.contain,
                       )),
                 ),
@@ -2256,8 +2368,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         singleProduct.product_images[index])*/
                                   FadeInImage.assetNetwork(
                                 placeholder: 'assets/placeholder.png',
-                                image: AppConfig.BASE_PATH +
-                                    _productImageList[index],
+                                image: Utils.getImageFilePath(_productImageList[index])/*AppConfig.BASE_PATH +
+                                    _productImageList[index]*/,
                                 fit: BoxFit.contain,
                               )),
                         ),
@@ -2268,8 +2380,8 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
           InkWell(
             onTap: () {
-              openPhotoDialog(context,
-                  AppConfig.BASE_PATH + _productImageList[_currentImage]);
+              openPhotoDialog(context, Utils.getImageFilePath(_productImageList[_currentImage])
+                  /*AppConfig.BASE_PATH + _productImageList[_currentImage]*/);
             },
             child: Container(
               height: 250,
@@ -2277,7 +2389,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Container(
                   child: FadeInImage.assetNetwork(
                 placeholder: 'assets/placeholder_rectangle.png',
-                image: AppConfig.BASE_PATH + _productImageList[_currentImage],
+                image: Utils.getImageFilePath(_productImageList[_currentImage])/*AppConfig.BASE_PATH + _productImageList[_currentImage]*/,
                 fit: BoxFit.scaleDown,
               )),
             ),

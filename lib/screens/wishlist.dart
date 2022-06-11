@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
@@ -181,8 +182,8 @@ class _WishlistState extends State<Wishlist> {
                                 left: Radius.circular(16), right: Radius.zero),
                             child: FadeInImage.assetNetwork(
                               placeholder: 'assets/placeholder.png',
-                              image: AppConfig.BASE_PATH +
-                                  _wishlistItems[index].product.thumbnail_image,
+                              image: Utils.getImageFilePath(_wishlistItems[index].product.thumbnail_image)/*AppConfig.BASE_PATH +
+                                  _wishlistItems[index].product.thumbnail_image*/,
                               fit: BoxFit.cover,
                             ))),
                     Container(

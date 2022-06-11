@@ -1,5 +1,6 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/change_language.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -68,7 +69,8 @@ class _MainDrawerState extends State<MainDrawer> {
                     ? ListTile(
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            AppConfig.BASE_PATH + "${avatar_original.$}",
+                            Utils.getImageFilePath("${avatar_original.$}")
+                            /*AppConfig.BASE_PATH + "${avatar_original.$}"*/,
                           ),
                         ),
                         title: Text("${user_name.$}"),

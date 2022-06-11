@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/screens/order_list.dart';
@@ -881,9 +882,9 @@ Navigator.pop(loadingcontext);
                                   placeholder: 'assets/placeholder.png',
                                   image: _paymentTypeList[index].payment_type ==
                                           "manual_payment"
-                                      ? AppConfig.BASE_PATH +
-                                          _paymentTypeList[index].image
-                                      : _paymentTypeList[index].image,
+                                      ? Utils.getImageFilePath(_paymentTypeList[index].image)/*AppConfig.BASE_PATH +
+                                          _paymentTypeList[index].image*/
+                                      : Utils.getImageFilePath(_paymentTypeList[index].image)/*_paymentTypeList[index].image*/,
                                   fit: BoxFit.fitWidth,
                                 ))),
                         Container(

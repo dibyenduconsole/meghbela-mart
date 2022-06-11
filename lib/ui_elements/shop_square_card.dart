@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/screens/seller_details.dart';
@@ -42,7 +43,7 @@ class _ShopSquareCardState extends State<ShopSquareCard> {
                           top: Radius.circular(16), bottom: Radius.zero),
                       child: FadeInImage.assetNetwork(
                         placeholder: 'assets/placeholder.png',
-                        image: AppConfig.BASE_PATH + widget.image,
+                        image: Utils.getImageFilePath(widget.image)/*widget.image*/,
                         fit: BoxFit.scaleDown,
                       ))),
               Container(

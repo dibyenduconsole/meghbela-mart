@@ -10,6 +10,8 @@ import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../utils_log.dart';
+
 class CategoryList extends StatefulWidget {
   CategoryList(
       {Key key,
@@ -222,8 +224,8 @@ class _CategoryListState extends State<CategoryList> {
                     left: Radius.circular(16), right: Radius.zero),
                 child: FadeInImage.assetNetwork(
                   placeholder: 'assets/placeholder.png',
-                  image: AppConfig.BASE_PATH +
-                      categoryResponse.categories[index].banner,
+                  image: Utils.getImageFilePath(categoryResponse.categories[index].banner),
+                  //AppConfig.BASE_PATH +categoryResponse.categories[index].banner,
                   fit: BoxFit.cover,
                 ))),
         Container(
