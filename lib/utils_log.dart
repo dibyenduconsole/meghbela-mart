@@ -1,4 +1,9 @@
+
+
+import 'package:active_ecommerce_flutter/screens/update_app.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info/package_info.dart';
 
 import 'app_config.dart';
 
@@ -33,5 +38,30 @@ class Utils{
     var d12 = DateFormat('MM/dd/yyyy').format(dt);
     Utils.logResponse("Time-"+d12);
     return d12.toString();
+  }
+
+  static void checkForceUpdateRequired(var context, String v){
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      String appName = packageInfo.appName;
+      String packageName = packageInfo.packageName;
+      String version = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+
+      print("appName- ${appName}");
+      print("packageName- ${packageName}");
+      print("version- ${version}");
+      print("local buildNumber- ${buildNumber}");
+      print("server v- ${v}");
+      try{
+      var iVersion = int.parse(v);
+      var iBuildNumber = int.parse(buildNumber);
+      if(iBuildNumber > iVersion){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateAppScreen()));
+      }
+      }catch(error){
+
+      }
+
+    });
   }
 }

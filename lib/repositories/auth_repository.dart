@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/force_update_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:active_ecommerce_flutter/data_model/login_response.dart';
@@ -283,5 +284,19 @@ class AuthRepository {
     Utils.logResponse("Request: "+post_body);
     Utils.logResponse("response: "+response.body);
     return loginResponseFromJson(response.body);
+  }
+
+
+  Future<ForceUpdateResponse> getAppForceUpdateStatus() async {
+
+    Uri url =  Uri.parse("${AppConfig.BASE_URL}/auth/app-force-update");
+    final response =
+    await http.get(url,
+      headers: {
+        "App-Language": app_language.$,
+      },);
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
+    return forceUpdateResponseFromJson(response.body);
   }
 }

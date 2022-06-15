@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:active_ecommerce_flutter/custom/CommonFunctoins.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
+import 'package:active_ecommerce_flutter/repositories/auth_repository.dart';
 import 'package:active_ecommerce_flutter/screens/cart.dart';
 import 'package:active_ecommerce_flutter/screens/category_list.dart';
 import 'package:active_ecommerce_flutter/screens/home.dart';
@@ -14,6 +15,8 @@ import 'dart:ui';
 import 'package:flutter/services.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../utils_log.dart';
 
 class Main extends StatefulWidget {
   Main({Key key, go_back = true}) : super(key: key);
@@ -48,12 +51,23 @@ class _MainState extends State<Main> {
 
   void initState() {
     // TODO: implement initState
+    getForceUpdateStatus();
     //re appear statusbar in case it was not there in the previous page
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     super.initState();
   }
-
+  getForceUpdateStatus() async {
+    var version = "0";
+    var forceUpdateResponse = await AuthRepository().getAppForceUpdateStatus();
+    if(forceUpdateResponse.success){
+      forceUpdateResponse.appVersion.forEach((appVersion) {
+         version = appVersion.version;
+         Utils.logResponse("version: "+version);
+         Utils.checkForceUpdateRequired(context, version);
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
