@@ -62,9 +62,19 @@ class _MainState extends State<Main> {
     var forceUpdateResponse = await AuthRepository().getAppForceUpdateStatus();
     if(forceUpdateResponse.success){
       forceUpdateResponse.appVersion.forEach((appVersion) {
-         version = appVersion.version;
-         Utils.logResponse("version: "+version);
-         Utils.checkForceUpdateRequired(context, version);
+        if(Platform.isAndroid){
+          if(appVersion.device_type == "1"){
+            version = appVersion.version;
+            Utils.logResponse("version:Android- "+version);
+            Utils.checkForceUpdateRequired(context, version);
+          }
+        }else if(Platform.isIOS){
+          if(appVersion.device_type == "2"){
+            version = appVersion.version;
+            Utils.logResponse("version:iOS- "+version);
+            Utils.checkForceUpdateRequired(context, version);
+          }
+        }
       });
     }
   }
