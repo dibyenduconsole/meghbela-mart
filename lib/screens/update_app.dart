@@ -76,7 +76,7 @@ class _UpdateAppScreenState extends State<UpdateAppScreen> {
                       ),
                       onPressed: () {
                         if (Platform.isAndroid || Platform.isIOS) {
-                          final appId = Platform.isAndroid ? 'com.meghbela.mart' : 'YOUR_IOS_APP_ID';
+                          final appId = Platform.isAndroid ? 'com.meghbela.mart' : 'com.buzzbites.meghbelamart';
                           final url = Uri.parse(
                             Platform.isAndroid
                                 ? "market://details?id=$appId"
