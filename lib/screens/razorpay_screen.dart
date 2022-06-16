@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:toast/toast.dart';
@@ -89,15 +90,16 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
+
       Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      //print(responseJSON.toString());
+      Utils.logResponse(responseJSON.toString());
       if (responseJSON["result"] == false) {
         Toast.show(responseJSON["message"], context,
             duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
 
         Navigator.pop(context);
       } else if (responseJSON["result"] == true) {
-        print("a");
+        Utils.logResponse("a");
         payment_details = responseJSON['payment_details'];
         onPaymentSuccess(payment_details);
       }
@@ -105,14 +107,14 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
   }
 
   onPaymentSuccess(payment_details) async {
-    print("b");
+    Utils.logResponse("b");
 
     var razorpayPaymentSuccessResponse = await PaymentRepository()
         .getRazorpayPaymentSuccessResponse(widget.payment_type, widget.amount,
             _combined_order_id, payment_details);
 
     if (razorpayPaymentSuccessResponse.result == false) {
-      print("c");
+      Utils.logResponse("c");
       Toast.show(razorpayPaymentSuccessResponse.message, context,
           duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
       Navigator.pop(context);
@@ -130,7 +132,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
         return OrderList(from_checkout: true);
       }));*/
     } else if (widget.payment_type == "wallet_payment") {
-      print("d");
+      Utils.logResponse("d");
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return Wallet(from_recharge: true);
       }));
@@ -141,8 +143,8 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
     String initial_url =
         "${AppConfig.BASE_URL}/razorpay/pay-with-razorpay?payment_type=${widget.payment_type}&combined_order_id=${_combined_order_id}&amount=${widget.amount}&user_id=${user_id.$}";
 
-    print("init url");
-    print(initial_url);
+    Utils.logResponse("init url");
+    Utils.logResponse(initial_url);
 
     if (_order_init == false &&
         _combined_order_id == 0 &&
@@ -164,7 +166,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
             },
             onWebResourceError: (error) {},
             onPageFinished: (page) {
-              print(page.toString());
+              Utils.logResponse(page.toString());
               getData();
             },
           ),

@@ -55,7 +55,7 @@ class Utils{
       try{
       var iVersion = int.parse(v);
       var iBuildNumber = int.parse(buildNumber);
-      if(iBuildNumber > iVersion){
+      if(iVersion > iBuildNumber){
         Navigator.push(context, MaterialPageRoute(builder: (context) => UpdateAppScreen()));
       }
       }catch(error){
