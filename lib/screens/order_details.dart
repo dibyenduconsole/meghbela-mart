@@ -1047,7 +1047,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ),
-            _orderDetails.delivery_date == 0 ?Container()
+            _orderDetails.delivery_date == "" ?Container()
                 :_orderDetails.delivery_date != null ?Row(
               children: [
                 Text(
