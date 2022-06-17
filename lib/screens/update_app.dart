@@ -49,7 +49,7 @@ class _UpdateAppScreenState extends State<UpdateAppScreen> {
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                    "There is new update available.Please the application now.",
+                    "There is a new update available. Please update the app now.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: MyTheme.font_grey,

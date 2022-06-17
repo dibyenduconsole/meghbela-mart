@@ -15,5 +15,5 @@ Tapabrata Mukherjee
 To change App version
 android -> local.properties
 
-flutter.versionName=1.0.8
-flutter.versionCode=8
+flutter.versionName=1.0.9
+flutter.versionCode=9
