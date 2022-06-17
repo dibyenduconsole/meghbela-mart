@@ -31,6 +31,7 @@ class RazorpayScreen extends StatefulWidget {
 class _RazorpayScreenState extends State<RazorpayScreen> {
   int _combined_order_id = 0;
   bool _order_init = false;
+  bool _isPaymentProcessing = false;
 
   WebViewController _webViewController;
 
@@ -157,19 +158,43 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
     } else {
       return SizedBox.expand(
         child: Container(
-          child: WebView(
-            debuggingEnabled: false,
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (controller) {
-              _webViewController = controller;
-              _webViewController.loadUrl(initial_url);
-            },
-            onWebResourceError: (error) {},
-            onPageFinished: (page) {
-              Utils.logResponse(page.toString());
-              getData();
-            },
-          ),
+          child: Stack(
+            children: [
+              
+              WebView(
+                debuggingEnabled: false,
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (controller) {
+                  _webViewController = controller;
+                  _webViewController.loadUrl(initial_url);
+                },
+                onWebResourceError: (error) {},
+                onPageFinished: (page) {
+                  Utils.logResponse("web- "+page.toString());
+                  if(page.toString().contains("https://www.meghbelamart.com/api/v2/razorpay/payment")){
+                    setState(() {
+                      _isPaymentProcessing = true;
+                    });
+                  }else{
+                    setState(() {
+                      _isPaymentProcessing = false;
+                    });
+                  }
+                  getData();
+                },
+              ),
+              _isPaymentProcessing
+              ?Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.white,
+                  child: Center(
+                    child: Text("Payment is processing", textAlign: TextAlign.center,
+                        style: TextStyle(color: MyTheme.font_grey)),
+                  )
+              ):Container(),
+            ],
+          )
         ),
       );
     }
