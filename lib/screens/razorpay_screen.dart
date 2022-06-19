@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
@@ -91,18 +93,35 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
         .evaluateJavascript("document.body.innerText")
         .then((data) {
       var decodedJSON = jsonDecode(data);
+      Utils.logResponse("decodedJSON:\n"+decodedJSON.toString());
+      if (Platform.isIOS) {
+        Utils.logResponse("Platform iOS= +");
+        var responseJSON = decodedJSON;//jsonDecode(decodedJSON);
+        Utils.logResponse("iOS responseJSON:\n" + responseJSON.toString());
+        if (responseJSON['result'] == false) {
+          Toast.show(responseJSON['message'], context,
+              duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
 
-      Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
-      Utils.logResponse(responseJSON.toString());
-      if (responseJSON["result"] == false) {
-        Toast.show(responseJSON["message"], context,
-            duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
+          Navigator.pop(context);
+        } else if (responseJSON['result'] == true) {
+          Utils.logResponse("a");
+          payment_details = responseJSON['payment_details'];
+          onPaymentSuccess(payment_details);
+        }
+      }else {
+        Utils.logResponse("Platform Android ");
+        Map<String, dynamic> responseJSON = jsonDecode(decodedJSON);
+        Utils.logResponse("Android responseJSON:\n" + responseJSON.toString());
+        if (responseJSON["result"] == false) {
+          Toast.show(responseJSON["message"], context,
+              duration: Toast.LENGTH_LONG, gravity: Toast.CENTER);
 
-        Navigator.pop(context);
-      } else if (responseJSON["result"] == true) {
-        Utils.logResponse("a");
-        payment_details = responseJSON['payment_details'];
-        onPaymentSuccess(payment_details);
+          Navigator.pop(context);
+        } else if (responseJSON["result"] == true) {
+          Utils.logResponse("a");
+          payment_details = responseJSON['payment_details'];
+          onPaymentSuccess(payment_details);
+        }
       }
     });
   }
@@ -171,7 +190,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
                 onWebResourceError: (error) {},
                 onPageFinished: (page) {
                   Utils.logResponse("web- "+page.toString());
-                  if(page.toString().contains("https://www.meghbelamart.com/api/v2/razorpay/payment")){
+                  /*if(page.toString().contains("https://www.meghbelamart.com/api/v2/razorpay/payment")){
                     setState(() {
                       _isPaymentProcessing = true;
                     });
@@ -179,7 +198,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
                     setState(() {
                       _isPaymentProcessing = false;
                     });
-                  }
+                  }*/
                   getData();
                 },
               ),
