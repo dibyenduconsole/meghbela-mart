@@ -190,7 +190,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
                 onWebResourceError: (error) {},
                 onPageFinished: (page) {
                   Utils.logResponse("web- "+page.toString());
-                  /*if(page.toString().contains("https://www.meghbelamart.com/api/v2/razorpay/payment")){
+                  if(page.toString().contains("https://www.meghbelamart.com/api/v2/razorpay/payment")){
                     setState(() {
                       _isPaymentProcessing = true;
                     });
@@ -198,7 +198,7 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
                     setState(() {
                       _isPaymentProcessing = false;
                     });
-                  }*/
+                  }
                   getData();
                 },
               ),
