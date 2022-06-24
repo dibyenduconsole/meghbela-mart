@@ -40,7 +40,19 @@ class OrderRepository {
     Utils.logResponse("response: "+response.body);
     return orderDetailResponseFromJson(response.body);
   }
+  Future<OrderDetailResponse> getInvoiceDetails({@required String id = "0"}) async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/auth/download/invoice/" + id.toString());
 
+    final response = await http.get(url,headers: {
+      "Authorization": "Bearer ${access_token.$}",
+      "App-Language": app_language.$,
+    });
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
+    return orderDetailResponseFromJson(response.body);
+  }
+// https://www.meghbelamart.com/api/v2/auth/download/invoice/20220622-22295721
   Future<String> cancelOrderDetails({ String code , String phone}) async {
     Uri url = Uri.parse(
         "${AppConfig.BASE_URL}/auth/change-delivery-status");

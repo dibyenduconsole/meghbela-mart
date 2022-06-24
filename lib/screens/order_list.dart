@@ -1,5 +1,6 @@
 import 'package:active_ecommerce_flutter/screens/order_details.dart';
 import 'package:active_ecommerce_flutter/screens/main.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -529,7 +530,9 @@ class _OrderListState extends State<OrderList> {
                     style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                   ),
                   Text(
-                    _orderList[index].payment_status_string,
+                    //_orderList[index].payment_status_string,
+                    _orderList[index].payment_type == "Razorpay" ?
+                    _orderList[index].payment_status_string : "COD",
                     style: TextStyle(color: MyTheme.font_grey, fontSize: 13),
                   ),
                   Padding(
@@ -537,7 +540,7 @@ class _OrderListState extends State<OrderList> {
                         ? const EdgeInsets.only(right: 8.0)
                         : const EdgeInsets.only(left: 8.0),
                     child: buildPaymentStatusCheckContainer(
-                        _orderList[index].payment_status),
+                        _orderList[index].payment_status, _orderList[index].payment_type),
                   ),
                 ],
               ),
@@ -570,17 +573,19 @@ class _OrderListState extends State<OrderList> {
     );
   }
 
-  Container buildPaymentStatusCheckContainer(String payment_status) {
+  Container buildPaymentStatusCheckContainer(String payment_status, String payment_type) {
+    Utils.logResponse("payment_status: "+payment_status);
+    Utils.logResponse("payment_type: "+payment_type);
     return Container(
       height: 16,
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          color: payment_status == "paid" ? Colors.green : Colors.red),
+          color: payment_status == "paid" ? Colors.green : Colors.orange),
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" ? FontAwesome.check : FontAwesome.check,
             color: Colors.white,
             size: 10),
       ),
