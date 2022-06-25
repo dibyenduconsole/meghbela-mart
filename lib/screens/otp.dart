@@ -35,7 +35,7 @@ class _OtpState extends State<Otp> {
   //controllers
   TextEditingController _verificationCodeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  OtpFieldController otpController = OtpFieldController();
+ // OtpFieldController otpController = OtpFieldController();
   String otpVal = "";
   bool otpVisible = false;
 
@@ -247,7 +247,22 @@ class _OtpState extends State<Otp> {
                               children: [
                                 SizedBox(
                                   height: 45,
-                                  child: OTPTextField(
+                                  child: TextField(
+                                    controller: _verificationCodeController,
+                                    autofocus: false,
+                                    keyboardType: TextInputType.number,
+                                    style: TextStyle(color: Colors.white, fontSize: 20),
+                                    inputFormatters: [
+                                      LengthLimitingTextInputFormatter(4),
+                                    ],
+                                    onChanged: (value) {
+                                      otpVal = value;
+                                      setState(() {});
+                                    },
+                                    decoration: InputDecorations.buildInputDecoration_1(
+                                        hint_text: ""),
+                                  ),
+                                  /*OTPTextField(
                                       controller: otpController,
                                       length: 4,
                                       width: _screen_width,
@@ -267,7 +282,7 @@ class _OtpState extends State<Otp> {
                                       onCompleted: (pin) {
                                         otpVal = pin;
                                         setState(() {});
-                                      }),
+                                      }),*/
                                 ),
                                 // Container(
                                 //   height: 36,

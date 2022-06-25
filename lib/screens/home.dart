@@ -1038,16 +1038,21 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             builder: (BuildContext context) {
               return Stack(
                 children: <Widget>[
-                  Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                          child: FadeInImage.assetNetwork(
-                            placeholder: 'assets/placeholder_rectangle.png',
-                            image: Utils.getImageFilePath(i)/*AppConfig.BASE_PATH + i*/,
-                            fit: BoxFit.fill,
-                          ))),
+                  InkWell(
+                    child:Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            child: FadeInImage.assetNetwork(
+                              placeholder: 'assets/placeholder_rectangle.png',
+                              image: Utils.getImageFilePath(i)/*AppConfig.BASE_PATH + i*/,
+                              fit: BoxFit.fill,
+                            ))),
+                    onTap: (){
+                      Utils.logResponse(">>Banner click: "+i);
+                    },
+                    ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Row(

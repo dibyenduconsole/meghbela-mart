@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:active_ecommerce_flutter/helpers/color_helper.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
@@ -17,6 +18,9 @@ import 'dart:async';
 import 'package:active_ecommerce_flutter/screens/checkout.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../app_config.dart';
 
 class OrderDetails extends StatefulWidget {
   int id;
@@ -92,6 +96,31 @@ class _OrderDetailsState extends State<OrderDetails> {
     }*/
     await OrderRepository()
         .cancelOrderDetails(code: _orderDetails.code, phone: user_phone.$.replaceAll("+91", ""))
+        .then((value) {
+      if (jsonDecode(value.toString())["result"] == true) {
+        ToastComponent.showDialog(
+            jsonDecode(value.toString())["message"], context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        fetchOrderDetails();
+      } else {
+        ToastComponent.showDialog(
+            jsonDecode(value.toString())["message"], context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      }
+    });
+    setState(() {});
+  }
+  _launchURL() async {
+    var  url = "${AppConfig.BASE_URL}/auth/download/invoice/${_orderDetails.code}";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  downloadInvoiceDetails() async {
+    await OrderRepository()
+        .getInvoiceDetails(id: _orderDetails.code)
         .then((value) {
       if (jsonDecode(value.toString())["result"] == true) {
         ToastComponent.showDialog(
@@ -483,7 +512,12 @@ class _OrderDetailsState extends State<OrderDetails> {
 
                 SliverList(
                     delegate:
-                    SliverChildListDelegate([buildDownloadInvoiceButton()]))
+                    SliverChildListDelegate([buildDownloadInvoiceButton()])),
+
+                SliverList(
+                    delegate:
+                    SliverChildListDelegate([buildCancelOrderButton()])),
+
               ],
             ),
           ),
@@ -1114,7 +1148,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Text(
-                      _orderDetails.payment_status_string,
+                      _orderDetails.payment_type == "Razorpay"?_orderDetails.payment_status_string:"COD",
                       style: TextStyle(
                         color: MyTheme.grey_153,
                       ),
@@ -1477,7 +1511,7 @@ class _OrderDetailsState extends State<OrderDetails> {
     );
   }
 
-  buildDownloadInvoiceButton(){
+  buildCancelOrderButton(){
     return
       _orderDetails == null ? Container()
       :_orderDetails.delivery_status == "cancelled"?Container()
@@ -1513,17 +1547,74 @@ class _OrderDetailsState extends State<OrderDetails> {
       );
   }
 
+
+  buildDownloadInvoiceButton(){
+    return Padding(
+        padding:
+        const EdgeInsets.only(top: 30.0, left: 100, right: 100),
+        child: Container(
+          height: 45,
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: MyTheme.textfield_grey, width: 1),
+              borderRadius:
+              const BorderRadius.all(Radius.circular(40.0))),
+          child: FlatButton(
+            minWidth: MediaQuery.of(context).size.width,
+            //height: 50,
+            color: Colors.blue,
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                const BorderRadius.all(Radius.circular(40.0))),
+            child: Text(
+              "Download invoice",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600),
+            ),
+            onPressed: ()  {
+              //downloadInvoiceDetails();
+              _launchURL();
+            },
+          ),
+        ),
+      );
+  }
+  /*Future download2(Dio dio, String url, String savePath) async {
+    try {
+      Response response = await dio.get(
+        url,
+        //onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status < 500;
+            }),
+      );
+      print(response.headers);
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print(e);
+    }
+  }*/
   Container buildPaymentStatusCheckContainer(String payment_status) {
     return Container(
       height: 16,
       width: 16,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0),
-          color: payment_status == "paid" ? Colors.green : Colors.red),
+          color: payment_status == "paid" ? Colors.green : Colors.orange),
       child: Padding(
         padding: const EdgeInsets.all(3),
         child: Icon(
-            payment_status == "paid" ? FontAwesome.check : FontAwesome.times,
+            payment_status == "paid" ? FontAwesome.check : FontAwesome.check,
             color: Colors.white,
             size: 10),
       ),
