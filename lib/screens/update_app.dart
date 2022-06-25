@@ -80,7 +80,7 @@ class _UpdateAppScreenState extends State<UpdateAppScreen> {
                           final url = Uri.parse(
                             Platform.isAndroid
                                 ? "market://details?id=$appId"
-                                : "https://apps.apple.com/app/id$appId",
+                                : "https://apps.apple.com/in/app/meghbela-mart/id1621828732",
                           );
                           Utils.logResponse("App Store url: "+url.toString());
                           _launchURL(url.toString());
