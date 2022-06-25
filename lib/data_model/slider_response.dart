@@ -35,15 +35,19 @@ class SliderResponse {
 class Slider {
   Slider({
     this.photo,
+    this.link,
   });
 
   String photo;
+  String link;
 
   factory Slider.fromJson(Map<String, dynamic> json) => Slider(
     photo: json["photo"],
+    link: json["link"],
   );
 
   Map<String, dynamic> toJson() => {
     "photo": photo,
+    "link": link,
   };
 }
