@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
@@ -11,6 +12,8 @@ import 'package:active_ecommerce_flutter/screens/wallet.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'expire_login_app.dart';
 
 class RazorpayScreen extends StatefulWidget {
   double amount;
@@ -52,23 +55,41 @@ class _RazorpayScreenState extends State<RazorpayScreen> {
         .getOrderCreateResponse(widget.payment_method_key);
 
     if (orderCreateResponse.result == false) {
-      ToastComponent.showDialog(orderCreateResponse.message, context,
+      /*ToastComponent.showDialog(orderCreateResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
-      return;
+      return;*/
+      Utils.logResponse("==${orderCreateResponse.message}");
+      if (orderCreateResponse.message.toString().contains("expired")) {
+        AuthHelper().clearUserData();
+        Navigator.pushAndRemoveUntil<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) =>
+                ExpireLoginScreen(msg: orderCreateResponse.message.toString()),
+          ),
+              (
+              route) => false, //if you want to disable back feature set to false
+        );
+      }else{
+        ToastComponent.showDialog(orderCreateResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        Navigator.of(context).pop();
+        return;
+      }
+    }else {
+      _combined_order_id = orderCreateResponse.combined_order_id;
+      _order_init = true;
+      setState(() {});
+
+      print("-----------");
+      print(_combined_order_id);
+      print(user_id.$);
+      print(widget.amount);
+      print(widget.payment_method_key);
+      print(widget.payment_type);
+      print("-----------");
     }
-
-    _combined_order_id = orderCreateResponse.combined_order_id;
-    _order_init = true;
-    setState(() {});
-
-    print("-----------");
-    print(_combined_order_id);
-    print(user_id.$);
-    print(widget.amount);
-    print(widget.payment_method_key);
-    print(widget.payment_type);
-    print("-----------");
   }
 
   @override

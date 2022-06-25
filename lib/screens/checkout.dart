@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/helpers/auth_helper.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -23,6 +24,8 @@ import 'package:toast/toast.dart';
 import 'package:active_ecommerce_flutter/screens/offline_screen.dart';
 import 'package:active_ecommerce_flutter/screens/paytm_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'expire_login_app.dart';
 
 class Checkout extends StatefulWidget {
   int order_id; // only need when making manual payment from order details
@@ -428,15 +431,34 @@ class _CheckoutState extends State<Checkout> {
         .getOrderCreateResponseFromCod(_selected_payment_method_key);
     Navigator.of(loadingcontext).pop();
     if (orderCreateResponse.result == false) {
-      ToastComponent.showDialog(orderCreateResponse.message, context,
+      /*ToastComponent.showDialog(orderCreateResponse.message, context,
           gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
       Navigator.of(context).pop();
-      return;
+      return;*/
+      Utils.logResponse("==${orderCreateResponse.message}");
+      if (orderCreateResponse.message.toString().contains("expired")) {
+        AuthHelper().clearUserData();
+        Navigator.pushAndRemoveUntil<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+            builder: (BuildContext context) =>
+                ExpireLoginScreen(msg: orderCreateResponse.message.toString()),
+          ),
+              (
+              route) => false, //if you want to disable back feature set to false
+        );
+      } else {
+        ToastComponent.showDialog(orderCreateResponse.message, context,
+            gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+        Navigator.of(context).pop();
+        return;
+      }
     }
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return OrderList(from_checkout: true);
-    }));
+    else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return OrderList(from_checkout: true);
+      }));
+    }
   }
 
   pay_by_manual_payment() async {
@@ -1054,6 +1076,30 @@ Navigator.pop(loadingcontext);
               Text("${AppLocalizations.of(context).loading_text}"),
             ],
           ));
+        });
+  }
+
+  showExpiredDialog(String msg){
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              msg,
+              style: TextStyle(
+                  fontSize: 24, color: Colors.black, fontFamily: 'intel'),
+            ),
+            content: new SingleChildScrollView(
+              child: Container(),),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text("Close"),
+                onPressed: () {
+                },
+              ),
+            ],
+          );
         });
   }
 }
