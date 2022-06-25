@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:active_ecommerce_flutter/custom/CommonFunctoins.dart';
+import 'package:active_ecommerce_flutter/data_model/slider_response.dart';
 import 'package:active_ecommerce_flutter/helpers/HexColor.dart';
 import 'package:active_ecommerce_flutter/helpers/addons_helper.dart';
 import 'package:active_ecommerce_flutter/helpers/business_setting_helper.dart';
@@ -8,6 +9,7 @@ import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/providers/locale_provider.dart';
 import 'package:active_ecommerce_flutter/screens/filter.dart';
 import 'package:active_ecommerce_flutter/screens/flash_deal_list.dart';
+import 'package:active_ecommerce_flutter/screens/product_details.dart';
 import 'package:active_ecommerce_flutter/screens/todays_deal_products.dart';
 import 'package:active_ecommerce_flutter/screens/top_selling_products.dart';
 import 'package:active_ecommerce_flutter/screens/category_products.dart';
@@ -20,6 +22,7 @@ import 'package:active_ecommerce_flutter/repositories/sliders_repository.dart';
 import 'package:active_ecommerce_flutter/repositories/category_repository.dart';
 import 'package:active_ecommerce_flutter/repositories/product_repository.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -117,8 +120,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
     // BusinessSettingHelper().setBusinessSettingData();
   }
 
+  SliderResponse carouselResponse;
   fetchCarouselImages() async {
-    var carouselResponse = await SlidersRepository().getSliders();
+    carouselResponse = await SlidersRepository().getSliders();
     carouselResponse.sliders.forEach((slider) {
       _carouselImageList.add(slider.photo);
     });
@@ -1051,6 +1055,7 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                             ))),
                     onTap: (){
                       Utils.logResponse(">>Banner click: "+i);
+                      navigateOnBannerClick(i);
                     },
                     ),
                   Align(
@@ -1232,5 +1237,26 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             : AppLocalizations.of(context).common_loading_more_products),
       ),
     );
+  }
+  
+  void navigateOnBannerClick(String photo){
+    var link = "";
+    carouselResponse.sliders.forEach((slider) {
+     if(photo == slider.photo){
+       link = slider.link;
+     }
+    });
+    Utils.logResponse("Link: "+link);
+    if(link.contains("categories")){
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return CategoryList(is_base_category: true,);
+      }));
+    }else if(link.contains("products")){
+      var iD = link.replaceAll("https://www.meghbelamart.com/api/v2/products/", "");
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return ProductDetails(id: int.parse(iD),);
+      }));
+    }
+
   }
 }
