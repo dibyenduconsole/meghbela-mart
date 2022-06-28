@@ -512,7 +512,13 @@ class _OrderDetailsState extends State<OrderDetails> {
 
                 SliverList(
                     delegate:
-                    SliverChildListDelegate([buildDownloadInvoiceButton()])),
+                    SliverChildListDelegate([
+                      _orderDetails != null
+                          ?_orderDetails.delivery_status_string == "Cancelled"
+                            ?Container()
+                            :buildDownloadInvoiceButton()
+                          :Container()
+                    ])),
 
                 SliverList(
                     delegate:
@@ -1540,14 +1546,54 @@ class _OrderDetailsState extends State<OrderDetails> {
                   fontWeight: FontWeight.w600),
             ),
             onPressed: () {
-              cancelOrderDetails();
+
+              onCancelOrderDialogAlert();
+
             },
           ),
         ),
       );
   }
 
-
+  onCancelOrderDialogAlert() {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          contentPadding: EdgeInsets.only(
+              top: 16.0, left: 2.0, right: 2.0, bottom: 2.0),
+          content: Padding(
+            padding:
+            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+            child: Text(
+              "Are you sure to cancel this order ?",
+              maxLines: 3,
+              style: TextStyle(color: MyTheme.font_grey, fontSize: 14),
+            ),
+          ),
+          actions: [
+            FlatButton(
+              child: Text(
+                AppLocalizations.of(context).cart_screen_cancel,
+                style: TextStyle(color: MyTheme.medium_grey),
+              ),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+              },
+            ),
+            FlatButton(
+              color: MyTheme.soft_accent_color,
+              child: Text(
+                AppLocalizations.of(context).cart_screen_confirm,
+                style: TextStyle(color: MyTheme.dark_grey),
+              ),
+              onPressed: () {
+                Navigator.of(context, rootNavigator: true).pop();
+                cancelOrderDetails();
+              },
+            ),
+          ],
+        ));
+  }
   buildDownloadInvoiceButton(){
     return Padding(
         padding:
