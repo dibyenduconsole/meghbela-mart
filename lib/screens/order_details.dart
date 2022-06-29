@@ -509,7 +509,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                 SliverList(
                     delegate:
                         SliverChildListDelegate([buildPaymentButtonSection()])),
+                SliverList(
+                    delegate:
+                    SliverChildListDelegate([
+                      _orderDetails != null
+                          ?_orderDetails.cancellation_rule.toString().length>0
+                            ?buildCancelRuleView()
+                            :Container()
+                          :Container()
 
+                    ])),
                 SliverList(
                     delegate:
                     SliverChildListDelegate([
@@ -1513,6 +1522,22 @@ class _OrderDetailsState extends State<OrderDetails> {
                 )
               : Container(),
         ],
+      ),
+    );
+  }
+
+  buildCancelRuleView(){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: EdgeInsets.only(left: 25, right:25, top: 5, bottom: 10),
+      decoration: BoxDecoration(
+          border: Border.all(
+              color: MyTheme.textfield_grey, width: 1),
+          borderRadius:
+          const BorderRadius.all(Radius.circular(10.0))),
+      child:  Padding(
+        padding: EdgeInsets.only(top: 5,bottom: 5, left: 10, right: 10),
+        child: Center(child:Text(_orderDetails?.cancellation_rule,)),
       ),
     );
   }
