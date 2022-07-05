@@ -70,6 +70,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _totalPrice;
   var _singlePrice;
   var _singlePriceString;
+  var _unit;
   int _quantity = 1;
   int _stock = 0;
 
@@ -100,6 +101,33 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
     fetchRelatedProducts();
     fetchTopProducts();
+  }
+  var defaultPostalCode = "";
+  fetchShippingAddressList() async {
+    List<dynamic> _shippingAddressList = [];
+    var postal_code = "";
+    var defaultPostalCode = "";
+    var addressResponse = await AddressRepository().getAddressList();
+    _shippingAddressList.addAll(addressResponse.addresses);
+    if (_shippingAddressList.length > 0) {
+      _shippingAddressList.forEach((address) {
+        postal_code = address.postal_code;
+        Utils.logResponse("PINCODE: "+postal_code);
+        if (address.set_default == 1 ) {
+          defaultPostalCode = address.postal_code;
+          Utils.logResponse("PINCODE postal_code: "+defaultPostalCode);
+        }
+      });
+
+      if(defaultPostalCode.length == 0){
+        defaultPostalCode = postal_code;
+      }
+
+      checkDeliveryPinCode(defaultPostalCode);
+    }
+    setState(() {
+      _pinCodeController.text = defaultPostalCode;
+    });
   }
 
   fetchProductDetails() async {
@@ -138,6 +166,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       _appbarPriceString = _productDetails.price_high_low;
       _singlePrice = _productDetails.calculable_price;
       _singlePriceString = _productDetails.main_price;
+      _unit = _productDetails.unit;
       calculateTotalPrice();
       _stock = _productDetails.current_stock;
       _productDetails.photos.forEach((photo) {
@@ -160,6 +189,11 @@ class _ProductDetailsState extends State<ProductDetails> {
       _productDetailsFetched = true;
 
       setState(() {});
+
+      if (is_logged_in.$ == true) {
+        fetchShippingAddressList();
+      }
+
     }
   }
 
@@ -1848,6 +1882,13 @@ class _ProductDetailsState extends State<ProductDetails> {
               color: MyTheme.accent_color,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
+        ),
+        Text(
+          "  /$_unit",
+          style: TextStyle(
+              color: MyTheme.grey_153,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w400),
         )
       ],
     );
