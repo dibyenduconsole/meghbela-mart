@@ -22,8 +22,8 @@ class AppConfig {
   //configure this
   //https://www.meghbelamart.com/
   // static const DOMAIN_PATH = "192.168.1.238/demo_ecommerce"; //localhost
-  static const DOMAIN_PATH = "demo.meghbelamart.com";
-  //static const DOMAIN_PATH = "www.meghbelamart.com";
+  //static const DOMAIN_PATH = "demo.meghbelamart.com";
+  static const DOMAIN_PATH = "www.meghbelamart.com";
       //"demo.activeitzone.com/ecommerce_flutter_demo"; //inside a folder
   //static const DOMAIN_PATH = "mydomain.com"; // directly inside the public folder
 
