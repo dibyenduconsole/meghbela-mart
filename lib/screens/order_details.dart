@@ -1137,6 +1137,49 @@ class _OrderDetailsState extends State<OrderDetails> {
                 ],
               ),
             ):Container(),
+
+            _orderDetails.delivery_slot == "" ?Container()
+                :_orderDetails.delivery_slot != null ?Row(
+              children: [
+                Text(
+                  "Delivery time",
+                  style: TextStyle(
+                      color: MyTheme.font_grey,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600),
+                ),
+                Spacer(),
+                Text(
+                  "",
+                  style: TextStyle(
+                      color: MyTheme.font_grey,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600),
+                ),
+              ],
+            ):Container(),
+            _orderDetails.delivery_slot == 0 ?Container()
+                :_orderDetails.delivery_slot != null ?Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Row(
+                children: [
+                  Text(
+                    ""+_orderDetails.delivery_slot,//.toString(),
+                    style: TextStyle(
+                      color: MyTheme.grey_153,
+                    ),
+                  ),
+                  Spacer(),
+                  Text(
+                    "",
+                    style: TextStyle(
+                      color: MyTheme.grey_153,
+                    ),
+                  ),
+                ],
+              ),
+            ):Container(),
+
             Row(
               children: [
                 Text(

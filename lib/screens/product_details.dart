@@ -1021,6 +1021,39 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 height: 60.0,
                               )),
                     ),
+
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        16.0,
+                        0.0,
+                        16.0,
+                        0.0,
+                      ),
+                      child: Text(
+                        "Cancellation and return policy",
+                        style: TextStyle(
+                            color: MyTheme.font_grey,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        8.0,
+                        0.0,
+                        8.0,
+                        8.0,
+                      ),
+                      child: _productDetails != null
+                          ? Container(
+                            height: 50, child: Html(data: _productDetails.cancellation_policy))
+                          : Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 8.0),
+                          child: ShimmerHelper().buildBasicShimmer(
+                            height: 60.0,
+                          )),
+                    ),
                     /*Divider(
                       height: 1,
                     ),
