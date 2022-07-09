@@ -55,8 +55,9 @@ class _ProductDetailsState extends State<ProductDetails> {
   TextEditingController sellerChatTitleController = TextEditingController();
   TextEditingController sellerChatMessageController = TextEditingController();
 
-  var deliveryMsg = "";
+  var deliveryMsg = "Check your pincode availablity ";
   Color deliveryMsgColor = MyTheme.font_grey;
+  int deliveryStatus = 0;
   //init values
   bool _isInWishList = false;
   var _productDetailsFetched = false;
@@ -70,6 +71,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   var _totalPrice;
   var _singlePrice;
   var _singlePriceString;
+  var _unit;
   int _quantity = 1;
   int _stock = 0;
 
@@ -100,6 +102,33 @@ class _ProductDetailsState extends State<ProductDetails> {
     }
     fetchRelatedProducts();
     fetchTopProducts();
+  }
+  var defaultPostalCode = "";
+  fetchShippingAddressList() async {
+    List<dynamic> _shippingAddressList = [];
+    var postal_code = "";
+    var defaultPostalCode = "";
+    var addressResponse = await AddressRepository().getAddressList();
+    _shippingAddressList.addAll(addressResponse.addresses);
+    if (_shippingAddressList.length > 0) {
+      _shippingAddressList.forEach((address) {
+        postal_code = address.postal_code;
+        Utils.logResponse("PINCODE: "+postal_code);
+        if (address.set_default == 1 ) {
+          defaultPostalCode = address.postal_code;
+          Utils.logResponse("PINCODE postal_code: "+defaultPostalCode);
+        }
+      });
+
+      if(defaultPostalCode.length == 0){
+        defaultPostalCode = postal_code;
+      }
+
+      checkDeliveryPinCode(defaultPostalCode);
+    }
+    setState(() {
+      _pinCodeController.text = defaultPostalCode;
+    });
   }
 
   fetchProductDetails() async {
@@ -138,6 +167,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       _appbarPriceString = _productDetails.price_high_low;
       _singlePrice = _productDetails.calculable_price;
       _singlePriceString = _productDetails.main_price;
+      _unit = _productDetails.unit;
       calculateTotalPrice();
       _stock = _productDetails.current_stock;
       _productDetails.photos.forEach((photo) {
@@ -160,6 +190,11 @@ class _ProductDetailsState extends State<ProductDetails> {
       _productDetailsFetched = true;
 
       setState(() {});
+
+      if (is_logged_in.$ == true) {
+        fetchShippingAddressList();
+      }
+
     }
   }
 
@@ -355,7 +390,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   checkDeliveryPinCode(String pincode) async {
     setState(() {
-      deliveryMsg = "";
+      deliveryMsg = "updating...";
     });
     var owner_id = _productDetails.seller_id;
     Utils.logResponse("owner_id: "+owner_id.toString());
@@ -365,16 +400,12 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     setState(() {
       deliveryMsg = deliveryPicCodeResponse.message;
+      if(deliveryPicCodeResponse.success)
+        deliveryStatus = 1;
+      else
+        deliveryStatus = 2;
     });
-    if (deliveryPicCodeResponse.success == true) {
-      setState(() {
-        deliveryMsgColor = MyTheme.font_grey;
-      });
-    } else {
-      setState(() {
-        deliveryMsgColor = Colors.red;
-      });
-    }
+
   }
 
   onPopped(value) async {
@@ -1379,7 +1410,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Delivery ",
+              Text("",
                   style: TextStyle(
                     color: Color.fromRGBO(153, 153, 153, 1),
                   )),
@@ -1397,18 +1428,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                           autofocus: false,
                           decoration:
                           InputDecorations.buildInputDecoration_phone(
-                              hint_text: ""),
+                              hint_text: "Pincode"),
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(6),
                           ],
                           onChanged: (value) {
-                            _pinCode = value;
+                            setState(() {
+                              deliveryStatus = 0;
+                              deliveryMsg = "Check your pincode availablity ";
+                              _pinCode = value;
+                            });
                           }
                       ),
                     ),
                   ),
                   FlatButton(onPressed: (){
-                    checkDeliveryPinCode(_pinCode);
+                    if(_pinCode.length==6)
+                      checkDeliveryPinCode(_pinCode);
                   },
                       color: MyTheme.golden,
                       shape: RoundedRectangleBorder(
@@ -1420,13 +1456,21 @@ class _ProductDetailsState extends State<ProductDetails> {
     fontWeight: FontWeight.w600),))
                 ],
               ),
-              Text(
-                deliveryMsg,
-                style: TextStyle(
-                    color: deliveryMsgColor,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400),
-              )
+
+              Row(children: [
+                Icon(
+                  deliveryStatus ==1?Icons.check:deliveryStatus ==2?Icons.close:Icons.location_on_outlined,
+                  color: deliveryStatus ==1? Colors.green:deliveryStatus ==2? Colors.red:deliveryStatus ==0? Colors.grey:Colors.grey,
+                  size: 12,),
+                Text(
+                  " "+deliveryMsg,
+                  style: TextStyle(
+                      color: deliveryStatus ==1? Colors.green:deliveryStatus ==2? Colors.red:deliveryStatus ==0? Colors.grey:Colors.grey,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w400),
+                )
+              ],)
+
             ],
           ));
   }
@@ -1848,6 +1892,13 @@ class _ProductDetailsState extends State<ProductDetails> {
               color: MyTheme.accent_color,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
+        ),
+        Text(
+          "  /$_unit",
+          style: TextStyle(
+              color: MyTheme.grey_153,
+              fontSize: 12.0,
+              fontWeight: FontWeight.w400),
         )
       ],
     );

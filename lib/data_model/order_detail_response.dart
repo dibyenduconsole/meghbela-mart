@@ -55,7 +55,8 @@ class DetailedOrder {
     this.tax,
     this.date,
     this.links,
-    this.cancelRequest
+    this.cancelRequest,
+    this.cancellation_rule,
   });
 
   int id;
@@ -80,13 +81,14 @@ class DetailedOrder {
   String date;
   Links links;
   bool cancelRequest;
+  String cancellation_rule;
 
   factory DetailedOrder.fromJson(Map<String, dynamic> json) => DetailedOrder(
     id: json["id"],
     code: json["code"],
     user_id: json["user_id"],
     manually_payable: json["manually_payable"],
-    //shipping_address: ShippingAddress.fromJson(json["shipping_address"]),
+    cancellation_rule: json["cancellation_rule"],
     shipping_address: json["shipping_address"].isEmpty ? null : ShippingAddress.fromJson(json["shipping_address"]),
     pickupPoint: json["pickup_point"] == null ? null : PickupPoint.fromJson(json["pickup_point"]),
     shipping_type: json["shipping_type"],
@@ -111,6 +113,7 @@ class DetailedOrder {
     "code": code,
     "user_id": user_id,
     "manually_payable": manually_payable,
+    "cancellation_rule": cancellation_rule,
     "shipping_address": shipping_address.toJson(),
     "pickup_point": pickupPoint == null ? null : pickupPoint.toJson(),
     "shipping_type": shipping_type,

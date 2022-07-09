@@ -187,6 +187,14 @@ class _OtpState extends State<Otp> {
         decoration: const BoxDecoration(gradient: MyTheme.gradColor),
         child: Scaffold(
           backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+          ),
           body: Stack(
             children: [
               // Container(
@@ -217,7 +225,8 @@ class _OtpState extends State<Otp> {
                       child: Text(
                         "${AppLocalizations.of(context).otp_screen_verify_your} " +
                             AppLocalizations.of(context)
-                                .otp_screen_phone_number,
+                                .otp_screen_phone_number + "\n+91${widget.phNo}",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: MyTheme.white,
                             fontSize: 18,
