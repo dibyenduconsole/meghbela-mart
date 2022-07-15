@@ -225,9 +225,9 @@ backgroundColor: Colors.white,
     return
       InkWell(
         onTap: (){
-          setState(() {
+          /*setState(() {
             if(isExpired) isExpired = false; else isExpired = true;
-          });
+          });*/
 
           Clipboard.setData(ClipboardData(text: _list[index].code));
 
