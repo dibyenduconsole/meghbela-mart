@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/repositories/clubpoint_repository.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -80,7 +81,23 @@ class _ProfileState extends State<Profile> {
     _orderCounterString =
         counterText(_orderCounter.toString(), default_length: 2);
 
+    fetchMyCouponData();
     setState(() {});
+  }
+
+  List<dynamic> _list = [];
+  fetchMyCouponData() async {
+    var clubpointResponse =
+    await ClubpointRepository().getMyCoupons();
+
+
+    setState(() {
+
+      if(clubpointResponse.success){
+        _list.addAll(clubpointResponse.discount);
+      }
+
+    });
   }
 
   String counterText(String txt, {default_length = 3}) {
@@ -405,7 +422,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          InkWell(
+          _list.length==0?Container():InkWell(
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {

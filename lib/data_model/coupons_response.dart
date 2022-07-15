@@ -34,6 +34,7 @@ class Coupons {
     this.discount,
     this.discount_type,
     this.coupon_discount_text,
+    this.status,
     this.details,
   });
 
@@ -41,6 +42,7 @@ class Coupons {
   int discount;
   String discount_type;
   String coupon_discount_text;
+  String status;
   Details details;
 
   factory Coupons.fromJson(Map<String, dynamic> json) => Coupons(
@@ -48,6 +50,7 @@ class Coupons {
     discount: json["discount"],
     discount_type: json["discount_type"],
     coupon_discount_text: json["coupon_discount_text"],
+    status:json["status"],
     details: Details.fromJson(json["details"]),
   );
 
@@ -56,6 +59,7 @@ class Coupons {
     "discount": discount,
     "discount_type": discount_type,
     "coupon_discount_text": coupon_discount_text,
+    "status":status,
     "details": details.toJson(),
   };
 }

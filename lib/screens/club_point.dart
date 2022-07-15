@@ -222,17 +222,19 @@ backgroundColor: Colors.white,
   }
 
   buildItemCard(index,_convertedSnackbar) {
+    if(_list[index].status == "available")
+      isExpired = false;
+    else isExpired = true;
     return
       InkWell(
         onTap: (){
-          /*setState(() {
-            if(isExpired) isExpired = false; else isExpired = true;
-          });*/
 
-          Clipboard.setData(ClipboardData(text: _list[index].code));
+          if(_list[index].status == "available") {
+            Clipboard.setData(ClipboardData(text: _list[index].code));
 
-          ToastComponent.showDialog("Voucher code copied", context,
-              gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+            ToastComponent.showDialog("Voucher code copied", context,
+                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          }
         },
         child: Card(
           elevation: 0.0,
@@ -240,7 +242,7 @@ backgroundColor: Colors.white,
             Container(
               height: 150,
               width: MediaQuery.of(context).size.width,
-              color: isExpired?Colors.orangeAccent:Colors.deepOrange,
+              color: isExpired?Colors.grey:Colors.deepOrange,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DashedRect(color: Colors.white, strokeWidth: 2.0, gap: 3.0,
@@ -255,9 +257,10 @@ backgroundColor: Colors.white,
                   child: Row(
                     children: [
                       Container(
+                        padding: EdgeInsets.all(2),
                         width: MediaQuery.of(context).size.width/3,
                         child: Center(
-                          child: Text(_list[index].coupon_discount_text+"\n OFF",
+                          child: Text(_list[index].coupon_discount_text,
                             style: TextStyle(
                                 color: MyTheme.white,
                                 fontSize: 20,
