@@ -1,4 +1,5 @@
 import 'package:active_ecommerce_flutter/app_config.dart';
+import 'package:active_ecommerce_flutter/data_model/coupons_response.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
@@ -44,5 +45,23 @@ class ClubpointRepository {
     Utils.logResponse("Request: "+post_body);
     Utils.logResponse("response: "+response.body);
     return clubpointToWalletResponseFromJson(response.body);
+  }
+
+
+  Future<CouponsResponse> getMyCoupons() async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/my-coupons");
+    // Utils.logResponse("url(${url.toString()}) access token (Bearer ${access_token.$})");
+    final response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${access_token.$}",
+        "App-Language": app_language.$
+      },
+    );
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
+    return couponsResponseFromJson(response.body);
   }
 }

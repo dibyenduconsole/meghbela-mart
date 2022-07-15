@@ -405,8 +405,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          club_point_addon_installed.$
-              ? InkWell(
+          InkWell(
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -427,14 +426,14 @@ class _ProfileState extends State<Profile> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
-                                Icons.monetization_on_outlined,
+                                Icons.money,
                                 color: Colors.white,
                               ),
                             )),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
-                            AppLocalizations.of(context).profile_screen_earning_points,
+                            "My Coupons",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: MyTheme.font_grey, fontSize: 14),
@@ -444,7 +443,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 )
-              : Container(),
+              ,
           refund_addon_installed.$
               ? InkWell(
             onTap: () {
