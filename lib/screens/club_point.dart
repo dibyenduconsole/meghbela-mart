@@ -1,3 +1,5 @@
+import 'package:active_ecommerce_flutter/ui_elements/dashed_rect.dart';
+import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
 import 'package:active_ecommerce_flutter/app_config.dart';
@@ -5,6 +7,7 @@ import 'package:active_ecommerce_flutter/repositories/clubpoint_repository.dart'
 import 'package:active_ecommerce_flutter/helpers/shimmer_helper.dart';
 import 'package:active_ecommerce_flutter/custom/toast_component.dart';
 import 'package:active_ecommerce_flutter/screens/wallet.dart';
+import 'package:flutter/services.dart';
 import 'package:toast/toast.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:active_ecommerce_flutter/helpers/shared_value_helper.dart';
@@ -17,7 +20,7 @@ class Clubpoint extends StatefulWidget {
 
 class _ClubpointState extends State<Clubpoint> {
   ScrollController _xcrollController = ScrollController();
-
+  bool isExpired = false;
   List<dynamic> _list = [];
   List<dynamic> _converted_ids = [];
   bool _isInitial = true;
@@ -49,10 +52,10 @@ class _ClubpointState extends State<Clubpoint> {
 
   fetchData() async {
     var clubpointResponse =
-        await ClubpointRepository().getClubPointListResponse(page: _page);
-    _list.addAll(clubpointResponse.clubpoints);
+        await ClubpointRepository().getMyCoupons();
+    _list.addAll(clubpointResponse.discount);
     _isInitial = false;
-    _totalData = clubpointResponse.meta.total;
+    //_totalData = clubpointResponse.meta.total;
     _showLoadingContainer = false;
     setState(() {});
   }
@@ -106,7 +109,7 @@ class _ClubpointState extends State<Clubpoint> {
 
     SnackBar _convertedSnackbar = SnackBar(
       content: Text(
-        AppLocalizations.of(context).club_point_screen_snackbar_points_converted,
+        "My Coupons",
         style: TextStyle(color: MyTheme.font_grey),
       ),
       backgroundColor: MyTheme.soft_accent_color,
@@ -138,7 +141,7 @@ class _ClubpointState extends State<Clubpoint> {
               onRefresh: _onRefresh,
               displacement: 0,
               child: CustomScrollView(
-                controller: _xcrollController,
+                //controller: _xcrollController,
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 slivers: [
@@ -185,7 +188,7 @@ backgroundColor: Colors.white,
         ),
       ),
       title: Text(
-        AppLocalizations.of(context).club_point_screen_earned_points,
+        "My Coupons",
         style: TextStyle(fontSize: 16, color: MyTheme.accent_color),
       ),
       elevation: 0.0,
@@ -219,25 +222,134 @@ backgroundColor: Colors.white,
   }
 
   buildItemCard(index,_convertedSnackbar) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        side: new BorderSide(color: MyTheme.light_grey, width: 1.0),
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      elevation: 0.0,
-      child: Padding(
+    if(_list[index].status == "available")
+      isExpired = false;
+    else isExpired = true;
+    return
+      InkWell(
+        onTap: (){
+
+          if(_list[index].status == "available") {
+            Clipboard.setData(ClipboardData(text: _list[index].code));
+
+            ToastComponent.showDialog("Voucher code copied", context,
+                gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+          }
+        },
+        child: Card(
+          elevation: 0.0,
+          child: Stack(children: [
+            Container(
+              height: 150,
+              width: MediaQuery.of(context).size.width,
+              color: isExpired?Colors.grey:Colors.deepOrange,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DashedRect(color: Colors.white, strokeWidth: 2.0, gap: 3.0,
+                ),
+              ),
+            ),
+            Container(
+                height: 150,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(2),
+                        width: MediaQuery.of(context).size.width/3,
+                        child: Center(
+                          child: Text(_list[index].coupon_discount_text,
+                            style: TextStyle(
+                                color: MyTheme.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width-(MediaQuery.of(context).size.width/2),
+                        child: Center(
+                          child: Column(children: [
+                            SizedBox(height: 15,),
+                            Text("Voucher code",
+                              style: TextStyle(
+                                  color: MyTheme.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 10,),
+                            Container(
+                              color: Colors.white,
+                              child: Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Text("  "+_list[index].code+"  ",
+                                  style: TextStyle(
+                                      color: MyTheme.dark_grey,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 5,),
+                            Row(
+                              children: [
+                                SizedBox(width: 25,),
+                                Icon(Icons.copy, color: Colors.white,size: 15,),
+                                Text(" Tap to copy code ",
+                                  style: TextStyle(
+                                      color: MyTheme.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400
+                                  ),
+                                  textAlign: TextAlign.center,
+                                )
+                              ],
+                            )
+
+
+                          ],),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+            ),
+            isExpired?Container(
+                color: Colors.red,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 10,right: 10,top: 5,bottom: 5),
+                  child: Text("Already Used",
+                      style: TextStyle(
+                          color: MyTheme.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400
+                      )),
+                ),
+              ):Container(),
+
+          ],),
+
+          /*Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
+
             Container(
                 width: 100,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _list[index].date,
+                      _list[index].code,
                       style: TextStyle(
                         color: MyTheme.dark_grey,
                       ),
@@ -252,9 +364,9 @@ backgroundColor: Colors.white,
                       ),
                     ),
                     Text(
-                      _list[index].convert_status == 1 || _converted_ids.contains(_list[index].id) ? "Yes" : "No",
+                      "yes",
                       style: TextStyle(
-                        color: _list[index].convert_status == 1? Colors.green: Colors.blue,
+                        color: Colors.green,
                       ),
                     ),
                   ],
@@ -266,7 +378,7 @@ backgroundColor: Colors.white,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      _list[index].points.toString(),
+                      _list[index].discount.toString(),
                       style: TextStyle(
                           color: MyTheme.accent_color,
                           fontSize: 16,
@@ -275,7 +387,7 @@ backgroundColor: Colors.white,
                     SizedBox(
                       height: 10,
                     ),
-                    _list[index].convert_status == 1 || _converted_ids.contains(_list[index].id) ? Text(
+                    _list[index].discount == 1  ? Text(
                       AppLocalizations.of(context).club_point_screen_done,
                       style: TextStyle(
                         color: Colors.green,
@@ -291,7 +403,7 @@ backgroundColor: Colors.white,
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {
-                          onPressConvert(_list[index].id,_convertedSnackbar);
+                          //onPressConvert(_list[index].coupon_discount_text,_convertedSnackbar);
                         },
                       ),
                     ),
@@ -299,7 +411,8 @@ backgroundColor: Colors.white,
                 ))
           ],
         ),
-      ),
-    );
+      ),*/
+        ),
+      );
   }
 }

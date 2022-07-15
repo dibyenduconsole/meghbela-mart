@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/repositories/clubpoint_repository.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -80,7 +81,23 @@ class _ProfileState extends State<Profile> {
     _orderCounterString =
         counterText(_orderCounter.toString(), default_length: 2);
 
+    fetchMyCouponData();
     setState(() {});
+  }
+
+  List<dynamic> _list = [];
+  fetchMyCouponData() async {
+    var clubpointResponse =
+    await ClubpointRepository().getMyCoupons();
+
+
+    setState(() {
+
+      if(clubpointResponse.success){
+        _list.addAll(clubpointResponse.discount);
+      }
+
+    });
   }
 
   String counterText(String txt, {default_length = 3}) {
@@ -405,8 +422,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          club_point_addon_installed.$
-              ? InkWell(
+          _list.length==0?Container():InkWell(
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -427,14 +443,14 @@ class _ProfileState extends State<Profile> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(
-                                Icons.monetization_on_outlined,
+                                Icons.money,
                                 color: Colors.white,
                               ),
                             )),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Text(
-                            AppLocalizations.of(context).profile_screen_earning_points,
+                            "My Coupons",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: MyTheme.font_grey, fontSize: 14),
@@ -444,7 +460,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                 )
-              : Container(),
+              ,
           refund_addon_installed.$
               ? InkWell(
             onTap: () {
