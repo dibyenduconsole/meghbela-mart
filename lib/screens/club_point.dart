@@ -259,16 +259,36 @@ backgroundColor: Colors.white,
                       Container(
                         padding: EdgeInsets.all(2),
                         width: MediaQuery.of(context).size.width/3,
-                        child: Center(
-                          child: Text(_list[index].coupon_discount_text,
-                            style: TextStyle(
-                                color: MyTheme.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600
-                            ),
-                            textAlign: TextAlign.center,
+                          child: Stack(
+                            children: [
+                              Center(
+                                child: Text(_list[index].coupon_discount_text,
+                                  style: TextStyle(
+                                      color: MyTheme.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(" Expires on: "+_list[index].offer_end+"\n 11.29 P.M",
+                                    style: TextStyle(
+                                        color: MyTheme.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w400
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
+
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width-(MediaQuery.of(context).size.width/2),
@@ -313,8 +333,6 @@ backgroundColor: Colors.white,
                                 )
                               ],
                             )
-
-
                           ],),
                         ),
                       )
