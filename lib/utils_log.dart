@@ -9,7 +9,7 @@ import 'app_config.dart';
 
 class Utils{
   static void logResponse(var value){
-    //print(value);
+    print(value);
   }
 
   static String getImageFilePath(var value){

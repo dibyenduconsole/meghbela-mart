@@ -63,6 +63,7 @@ class _ProfileState extends State<Profile> {
   }
 
   fetchAll() {
+    fetchSpecialCouponData();
     fetchCounters();
   }
 
@@ -82,6 +83,7 @@ class _ProfileState extends State<Profile> {
         counterText(_orderCounter.toString(), default_length: 2);
 
     fetchMyCouponData();
+
     setState(() {});
   }
 
@@ -98,6 +100,12 @@ class _ProfileState extends State<Profile> {
       }
 
     });
+  }
+
+  fetchSpecialCouponData() async {
+    var specialoupon =
+    await ClubpointRepository().getSpecialCoupons();
+
   }
 
   String counterText(String txt, {default_length = 3}) {
