@@ -64,4 +64,20 @@ class ClubpointRepository {
     Utils.logResponse("response: "+response.body);
     return couponsResponseFromJson(response.body);
   }
+  Future<CouponsResponse> getSpecialCoupons() async {
+    Uri url = Uri.parse(
+        "${AppConfig.BASE_URL}/set-special-coupon");
+    // Utils.logResponse("url(${url.toString()}) access token (Bearer ${access_token.$})");
+    final response = await http.get(
+      url,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer ${access_token.$}",
+        "App-Language": app_language.$
+      },
+    );
+    Utils.logResponse("URL: "+url.toString());
+    Utils.logResponse("response: "+response.body);
+    return couponsResponseFromJson(response.body);
+  }
 }
