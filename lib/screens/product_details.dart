@@ -1044,7 +1044,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         8.0,
                         8.0,
                       ),
-                      child: _productDetails != null
+                      child: _productDetails != null && _productDetails.cancellation_policy != null
                           ? Container(
                             height: 50, child: Html(data: _productDetails.cancellation_policy))
                           : Padding(
