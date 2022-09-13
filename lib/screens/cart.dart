@@ -1,3 +1,4 @@
+import 'package:active_ecommerce_flutter/repositories/coupon_repository.dart';
 import 'package:active_ecommerce_flutter/screens/shipping_info.dart';
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
@@ -228,6 +229,7 @@ class _CartState extends State<Cart> {
         reset();
         fetchData();
       } else if (mode == "proceed_to_shipping") {
+        onCouponRemove();
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ShippingInfo(
           );
@@ -237,7 +239,19 @@ class _CartState extends State<Cart> {
       }
     }
   }
+  onCouponRemove() async {
+    var couponRemoveResponse =
+    await CouponRepository().getCouponRemoveResponse();
 
+    /*if (couponRemoveResponse.result == false) {
+      ToastComponent.showDialog(couponRemoveResponse.message, context,
+          gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
+      return;
+    }
+
+    reset_summary();
+    fetchSummary();*/
+  }
   reset() {
     _shopList = [];
     _isInitial = true;
