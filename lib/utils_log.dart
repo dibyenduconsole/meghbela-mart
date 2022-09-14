@@ -14,7 +14,7 @@ class Utils{
 
   static String getImageFilePath(var value){
     String path = "";
-    logResponse("value- "+value);
+    logResponse("value- $value");
     if(value != null){
       if(value.toString().startsWith("http")){
         path = value.toString().replaceAll("https://d2bi56w5lxny86.cloudfront.net/", AppConfig.BASE_PATH);
