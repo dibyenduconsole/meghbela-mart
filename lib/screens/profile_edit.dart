@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:active_ecommerce_flutter/utils_log.dart';
 import 'package:flutter/material.dart';
 import 'package:active_ecommerce_flutter/my_theme.dart';
@@ -254,7 +256,7 @@ backgroundColor: Colors.white,
                       fit: BoxFit.fill,
                     )),
               ),
-              Positioned(
+              Platform.isAndroid ?Positioned(
                 right: 8,
                 bottom: 8,
                 child: SizedBox(
@@ -277,7 +279,7 @@ backgroundColor: Colors.white,
                     },
                   ),
                 ),
-              )
+              ) :Container()
             ],
           ),
         ),
