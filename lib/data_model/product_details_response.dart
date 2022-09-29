@@ -61,7 +61,11 @@ class DetailedProduct {
     this.cancellation_policy,
     this.video_link,
     this.link,
-    this.brand
+    this.brand,
+    this.is_available,
+    this.seller_notification,
+    this.available_start,
+    this.available_end
   });
 
   int id;
@@ -92,6 +96,10 @@ class DetailedProduct {
   String video_link;
   String link;
   Brand brand;
+  bool is_available;
+  String seller_notification;
+  String available_start;
+  String available_end;
 
   factory DetailedProduct.fromJson(Map<String, dynamic> json) => DetailedProduct(
     id: json["id"],
@@ -122,6 +130,10 @@ class DetailedProduct {
     video_link: json["video_link"],
     link: json["link"],
     brand: Brand.fromJson(json["brand"]),
+    is_available: json["is_available"],
+    seller_notification: json["seller_notification"],
+    available_start: json["available_start"],
+    available_end: json["available_end"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -153,6 +165,10 @@ class DetailedProduct {
     "video_link": video_link,
     "link": link,
     "brand": brand.toJson(),
+    "is_available": is_available,
+    "seller_notification": seller_notification,
+    "available_start": available_start,
+    "available_end": available_end,
   };
 }
 

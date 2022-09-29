@@ -700,7 +700,24 @@ backgroundColor: Colors.white,
                             fontWeight: FontWeight.w500),
                       ):Container()
                     :Container(),
-              )
+              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: _shopList[seller_index].cart_items[item_index]
+                      .is_product_active!= null
+                      ? _shopList[seller_index].cart_items[item_index]
+                      .is_product_active == false ?Text(
+                    "This product is currently not available.",
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500),
+                  ):Container()
+                      :Container(),
+                )
                   ],
                 ),
               ),

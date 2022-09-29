@@ -820,6 +820,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                           : ShimmerHelper().buildBasicShimmer(
                               height: 30.0,
                             )),
+                      _productDetails != null && _productDetails.available_start.toString().length>0
+                          && _productDetails.available_end.toString().length>0
+                          ?Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          "[ The product can be ordered only between\n "+_productDetails.available_start + " to "+_productDetails.available_end+" ]",
+                          style: TextStyle(
+                              color: MyTheme.accent_color,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      )
+                          : Container()
                 ])),
                 SliverList(
                     delegate: SliverChildListDelegate([
@@ -966,6 +979,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Divider(
                     height: 24,
                   ),
+                      _productDetails != null && _productDetails.seller_notification.toString().length>0
+                       ?Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: Text(
+                          _productDetails.seller_notification,
+                          style: TextStyle(
+                              color: MyTheme.accent_color,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                      : Container()
                 ])),
                 // PIN code delivery check
                 SliverList(
@@ -1395,7 +1420,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     color: MyTheme.font_grey,
                     fontSize: 14,
                     fontWeight: FontWeight.w600),
-              )
+              ),
             ],
           ),
         ),
@@ -1989,7 +2014,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               FlatButton(
                 minWidth: MediaQuery.of(context).size.width / 2 - .5,
                 height: 50,
-                color: MyTheme.golden,
+                color: _productDetails != null && _productDetails.is_available ? MyTheme.golden :MyTheme.textfield_grey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0.0),
                 ),
@@ -2002,7 +2027,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                       fontWeight: FontWeight.w600),
                 ),
                 onPressed: () {
+                if(_productDetails != null && _productDetails.is_available) {
                   onPressAddToCart(context, _addedToCartSnackbar);
+                }
                 },
               ),
               SizedBox(
@@ -2011,7 +2038,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               FlatButton(
                 minWidth: MediaQuery.of(context).size.width / 2 - .5,
                 height: 50,
-                color: MyTheme.accent_color,
+                color: _productDetails != null && _productDetails.is_available ? MyTheme.accent_color : MyTheme.textfield_grey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0.0),
                 ),
@@ -2024,7 +2051,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       fontWeight: FontWeight.w600),
                 ),
                 onPressed: () {
-                  onPressBuyNow(context);
+                  if(_productDetails != null && _productDetails.is_available)
+                    {
+                      onPressBuyNow(context);
+                    }
                 },
               )
             ],

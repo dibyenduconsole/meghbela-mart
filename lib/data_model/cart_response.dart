@@ -49,6 +49,9 @@ class CartItem {
     this.lower_limit,
     this.upper_limit,
     this.is_available,
+    this.is_product_active,
+    this.available_start,
+    this.available_end
   });
 
   int id;
@@ -66,6 +69,9 @@ class CartItem {
   int lower_limit;
   int upper_limit;
   int is_available;
+  bool is_product_active;
+  String available_start;
+  String available_end;
 
   factory CartItem.fromJson(Map<String, dynamic> json) => CartItem(
     id: json["id"] == null ? null : json["id"],
@@ -83,6 +89,9 @@ class CartItem {
     lower_limit: json["lower_limit"] == null ? null : json["lower_limit"],
     upper_limit: json["upper_limit"] == null ? null : json["upper_limit"],
     is_available: json["is_available"] == null ? null : json["is_available"],
+    is_product_active: json["is_product_active"],
+    available_start: json["available_start"],
+    available_end: json["available_end"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -101,5 +110,8 @@ class CartItem {
     "lower_limit": lower_limit == null ? null : lower_limit,
     "upper_limit": upper_limit == null ? null : upper_limit,
     "is_available": is_available == null ? null : is_available,
+    "is_product_active": is_product_active,
+    "available_start": available_start,
+    "available_end": available_end,
   };
 }
