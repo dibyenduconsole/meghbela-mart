@@ -1,0 +1,27 @@
+
+
+Megbela Mart Flutter code
+
+Android target to 33 and release to play store on 02-09-2023
+version 1.2.0- code-20
+
+Project can build on
+
+Flutter 2.8.0 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision cf44000065 (1 year, 9 months ago) • 2021-12-08 14:06:50 -0800
+Engine • revision 40a99c5951
+Tools • Dart 2.15.0
+
+Android Studio 2021.2.1 - Build on 28 April 2022
+
+Android Studio Chipmunk | 2021.2.1
+Build #AI-212.5712.43.2112.8512546, built on April 28, 2022
+Runtime version: 11.0.12+0-b1504.28-7817840 x86_64
+VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o.
+macOS 12.6.8
+GC: G1 Young Generation, G1 Old Generation
+Memory: 1280M
+Cores: 4
+Registry: external.system.auto.import.disabled=true
+Non-Bundled Plugins: Dart (212.5744), io.flutter (71.2.2)
+
